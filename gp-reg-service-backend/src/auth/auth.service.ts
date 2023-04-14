@@ -1,3 +1,4 @@
+import { jwtPayload } from './../utils/types';
 import { UsersService } from './../users/users.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -16,7 +17,7 @@ export class AuthService {
     if(!isPasswordValid) {
       throw new UnauthorizedException('Invalid username or password!');
     }
-    const payload = { nhsNumber, sub: user.id, roles: user.roles };
+    const payload: jwtPayload = { nhsNumber, sub: user.id, roles: user.roles };
     const access_token = await this.jwtService.signAsync(payload);
     return { access_token };
   }

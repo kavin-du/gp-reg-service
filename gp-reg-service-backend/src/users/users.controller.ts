@@ -1,8 +1,9 @@
 import { SkipAuth } from './../auth/skipauth.decorator';
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Request, Req, Res } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { Response } from 'express';
 
 @Controller('users')
 export class UsersController {
@@ -30,7 +31,10 @@ export class UsersController {
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.remove(+id);
+  async remove(@Param('id', ParseIntPipe) id: number, @Request() req, @Res() response: Response) {
+    await this.usersService.remove(+id, req.user);
+    return response.status(204).json({
+      message: 'User deleted successfully'
+    })
   }
 }

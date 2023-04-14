@@ -1,4 +1,5 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { jwtPayload } from './../utils/types';
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from 'src/roles/role.enum';
 import { Repository } from 'typeorm';
@@ -46,7 +47,10 @@ export class UsersService {
     return this.userRepository.update(id, { ...updateUserDto });
   }
 
-  remove(id: number) {
-    return this.userRepository.delete(id);
+  async remove(id: number, user: jwtPayload) {
+    if(user.sub !== id) {
+      throw new UnauthorizedException('You are not allowed to delete other users!');
+    }
+    return await this.userRepository.delete(id);
   }
 }
