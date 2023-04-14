@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -17,12 +18,16 @@ export class UsersService {
     if(oldUser) {
       throw new ConflictException('User already exists.');
     }
+    const hashedPw = await bcrypt.hash(createUserDto.password, 10);
+
     const newuser = this.userRepository.create({
       ...createUserDto,
+      password: hashedPw,
       createdAt: new Date(),
       roles: [Role.User]
     });
-    return this.userRepository.save(newuser);
+    const { password, ...user } = await this.userRepository.save(newuser);
+    return user;
   }
 
   findAll() {

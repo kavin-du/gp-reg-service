@@ -19,10 +19,10 @@ import { JwtModule } from '@nestjs/jwt';
   controllers: [AuthController],
   providers: [
     AuthService,
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AuthGuard
+    // },
     {
       provide: APP_GUARD,
       useClass: RolesGuard
