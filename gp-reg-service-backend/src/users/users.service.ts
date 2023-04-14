@@ -1,5 +1,5 @@
 import { jwtPayload } from './../utils/types';
-import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from 'src/roles/role.enum';
 import { Repository } from 'typeorm';
@@ -11,7 +11,7 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private userRepository: Repository<User>
+    @InjectRepository(User) private readonly userRepository: Repository<User>
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -35,8 +35,12 @@ export class UsersService {
     return this.userRepository.find();
   }
 
-  findOne(id: number) {
-    return this.userRepository.findOneBy({ id });
+  async findUserById(id: number) {
+    const user = await this.userRepository.findOneBy({ id });
+    if(!user) {
+      throw new NotFoundException('User does not exist!');
+    }
+    return user;
   }
   
   findByNHS(nhsNumber: string) {

@@ -1,5 +1,6 @@
+import { Appointment } from './../../appointments/entities/appointment.entity';
 import { Role } from './../../roles/role.enum';
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({ name: 'users' })
 export class User {
@@ -26,4 +27,7 @@ export class User {
 
   @Column({ type: 'simple-array'})
   roles: Role[];
+
+  @OneToMany(() => Appointment, (appointment) => appointment.user)
+  appointments: Appointment[]
 }

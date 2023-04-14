@@ -1,3 +1,5 @@
+import { AppointmentsService } from './../appointments/appointments.service';
+import { CreateAppointmentDto } from './../appointments/dto/create-appointment.dto';
 import { SkipAuth } from './../auth/skipauth.decorator';
 import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Request, Req, Res } from '@nestjs/common';
 import { UsersService } from './users.service';
@@ -7,7 +9,10 @@ import { Response } from 'express';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly appointmentsService: AppointmentsService,
+  ) {}
 
   @SkipAuth()
   @Post()
@@ -15,15 +20,20 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
+  @Post(':id/appointments')
+  createAppointment(@Param('id', ParseIntPipe) id: number, @Body() createAppointmentDto: CreateAppointmentDto) {
+    return this.appointmentsService.create(id, createAppointmentDto);
+  }
+
   @Get()
   findAll() {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.usersService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id', ParseIntPipe) id: number) {
+  //   return this.usersService.findOne(+id);
+  // }
 
   @Patch(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
