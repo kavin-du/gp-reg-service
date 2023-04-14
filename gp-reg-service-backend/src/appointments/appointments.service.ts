@@ -24,6 +24,15 @@ export class AppointmentsService {
     return this.appointmentRepo.save(newAppointment);
   }
 
+  async findByUser(id: number) {
+    const _user = await this.userService.findUserById(id);
+    return this.appointmentRepo.find({
+      where: {
+        user: { id }
+      }
+    });
+  }
+
   // findAll() {
   //   return `This action returns all appointments`;
   // }

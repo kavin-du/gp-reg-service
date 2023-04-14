@@ -25,6 +25,11 @@ export class UsersController {
     return this.appointmentsService.create(id, createAppointmentDto);
   }
 
+  @Get(':id/appointments')
+  getAppointments(@Param('id', ParseIntPipe) id: number) {
+    return this.appointmentsService.findByUser(id);
+  }
+
   @Get()
   findAll() {
     return this.usersService.findAll();
