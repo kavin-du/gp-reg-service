@@ -7,7 +7,16 @@ export class User {
   id: number;
 
   @Column({ unique: true })
-  email: string;
+  nhsNumber: string;
+
+  @Column({ nullable: true })
+  firstname: string;
+
+  @Column({ nullable: true })
+  surname: string;
+
+  @Column({ nullable: true })
+  postalCode: string;
 
   @Column()
   password: string;

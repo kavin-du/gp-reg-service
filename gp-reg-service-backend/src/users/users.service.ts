@@ -13,7 +13,7 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const oldUser = await this.findByEmail(createUserDto.email);
+    const oldUser = await this.findByNHS(createUserDto.nhsNumber);
     if(oldUser) {
       throw new ConflictException('User already exists.');
     }
@@ -33,8 +33,8 @@ export class UsersService {
     return this.userRepository.findOneBy({ id });
   }
   
-  findByEmail(email: string) {
-    return this.userRepository.findOneBy({ email });
+  findByNHS(nhsNumber: string) {
+    return this.userRepository.findOneBy({ nhsNumber });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

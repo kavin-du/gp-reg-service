@@ -1,4 +1,4 @@
 export class SignInDto {
-  email: string;
+  nhsNumber: string;
   password: string;
 }
