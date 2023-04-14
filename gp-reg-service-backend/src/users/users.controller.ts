@@ -12,7 +12,7 @@ export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly appointmentsService: AppointmentsService,
-  ) {}
+  ) { }
 
   @SkipAuth()
   @Post()
@@ -20,15 +20,6 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  @Post(':id/appointments')
-  createAppointment(@Param('id', ParseIntPipe) id: number, @Body() createAppointmentDto: CreateAppointmentDto) {
-    return this.appointmentsService.create(id, createAppointmentDto);
-  }
-
-  @Get(':id/appointments')
-  getAppointments(@Param('id', ParseIntPipe) id: number) {
-    return this.appointmentsService.findByUser(id);
-  }
 
   @Get()
   findAll() {
@@ -51,5 +42,25 @@ export class UsersController {
     return response.status(204).json({
       message: 'User deleted successfully'
     })
+  }
+
+  // ===== APPOINTMENTS =====
+
+  @Get(':id/appointments')
+  getAppointments(@Param('id', ParseIntPipe) id: number) {
+    return this.appointmentsService.findByUser(id);
+  }
+
+  @Post(':id/appointments')
+  createAppointment(@Param('id', ParseIntPipe) id: number, @Body() createAppointmentDto: CreateAppointmentDto) {
+    return this.appointmentsService.create(id, createAppointmentDto);
+  }
+
+  @Delete(':userId/appointments/:appointmentId')
+  cancelAppointment(
+    @Param('userId', ParseIntPipe) userId: number, 
+    @Param('appointmentId', ParseIntPipe) appointmentId: number,
+  ) {
+    return this.appointmentsService.cancelByUser(userId, appointmentId);
   }
 }

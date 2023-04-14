@@ -33,20 +33,9 @@ export class AppointmentsService {
     });
   }
 
-  // findAll() {
-  //   return `This action returns all appointments`;
-  // }
-
-  // findOne(id: number) {
-  //   return `This action returns a #${id} appointment`;
-  // }
-
-  // update(id: number, updateAppointmentDto: UpdateAppointmentDto) {
-  //   return `This action updates a #${id} appointment`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} appointment`;
-  // }
+  async cancelByUser(userid: number, appid: number) {
+    const _user = await this.userService.findUserById(userid);
+    return this.appointmentRepo.delete({ id: appid })
+  }
 
 }
