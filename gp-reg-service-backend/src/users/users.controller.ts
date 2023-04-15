@@ -1,3 +1,4 @@
+import { UpdateAppointmentDto } from './../appointments/dto/update-appointment.dto';
 import { AppointmentsService } from './../appointments/appointments.service';
 import { CreateAppointmentDto } from './../appointments/dto/create-appointment.dto';
 import { SkipAuth } from './../auth/skipauth.decorator';
@@ -48,12 +49,21 @@ export class UsersController {
 
   @Get(':id/appointments')
   getAppointments(@Param('id', ParseIntPipe) id: number) {
-    return this.appointmentsService.findByUser(id);
+    return this.appointmentsService.findManyByUser(id);
   }
 
   @Post(':id/appointments')
   createAppointment(@Param('id', ParseIntPipe) id: number, @Body() createAppointmentDto: CreateAppointmentDto) {
     return this.appointmentsService.create(id, createAppointmentDto);
+  }
+
+  @Patch(':userId/appointments/:appointmentId')
+  updateAppointment(
+    @Param('userId', ParseIntPipe) userId: number, 
+    @Param('appointmentId', ParseIntPipe) appointmentId: number,
+    @Body() updateAppointmentDto: UpdateAppointmentDto,
+  ) {
+    return this.appointmentsService.updateByUser(userId, appointmentId, updateAppointmentDto);
   }
 
   @Delete(':userId/appointments/:appointmentId')

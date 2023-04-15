@@ -8,23 +8,6 @@ export class CreateUserDto {
   @Length(11, 11)
   nhsNumber: string;
 
-  // @IsDefined() @IsNotEmpty()
-  // firstname: string;
-
-  // @IsDefined() @IsNotEmpty()
-  // surname: string;
-
-  // @IsDefined() 
-  // @IsDate()
-  // @Type(() => Date)
-  // dateOfBirth: Date;
-
-  // @IsDefined() @IsNotEmpty()
-  // genderCode: string;
-
-  // @IsDefined() @IsNotEmpty()
-  // postalCode: string;
-
   @IsDefined() @IsNotEmpty()
   password: string;
 }
