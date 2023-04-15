@@ -13,6 +13,9 @@ export class AuthService {
 
   async signIn(nhsNumber: string, pass: string): Promise<any> {
     const user = await this.usersService.findByNHS(nhsNumber);
+    if(!user) {
+      throw new UnauthorizedException('Invalid username or password!');
+    }
     const isPasswordValid = await bcrypt.compare(pass, user?.password);
     if(!isPasswordValid) {
       throw new UnauthorizedException('Invalid username or password!');

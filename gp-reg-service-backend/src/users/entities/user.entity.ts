@@ -10,13 +10,19 @@ export class User {
   @Column({ unique: true })
   nhsNumber: string;
 
-  @Column({ nullable: true })
+  @Column()
   firstname: string;
 
-  @Column({ nullable: true })
+  @Column()
   surname: string;
 
-  @Column({ nullable: true })
+  @Column()
+  dateOfBirth: Date;
+
+  @Column()
+  genderCode: string;
+
+  @Column()
   postalCode: string;
 
   @Column()
