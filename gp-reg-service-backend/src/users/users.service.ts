@@ -18,14 +18,26 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
+    // user from the surgery db
     const oldUser = await this.findByNHS(createUserDto.nhsNumber);
     if(oldUser) {
       throw new ConflictException('User already exists.');
+    }
+    // user record from the central health db
+    const oldRecord = await this.patientRepo.findOneBy({ NHSNumber: createUserDto.nhsNumber as unknown as number});
+    if(!oldRecord) {
+      const msg = 'We don\'t have a medical record matching with your NHS number!';
+      throw new NotFoundException(msg);
     }
     const hashedPw = await bcrypt.hash(createUserDto.password, 10);
 
     const newuser = this.userRepository.create({
       ...createUserDto,
+      firstname: oldRecord.Forename,
+      surname: oldRecord.Surname,
+      dateOfBirth: oldRecord.PersonDOB,
+      genderCode: oldRecord.GenderCode,
+      postalCode: oldRecord.Postcode,
       password: hashedPw,
       createdAt: new Date(),
       roles: [Role.User]
@@ -36,7 +48,6 @@ export class UsersService {
 
   findAll() {
     return this.userRepository.find();
-    // return this.patientRepo.find();
   }
 
   async findUserById(id: number) {
