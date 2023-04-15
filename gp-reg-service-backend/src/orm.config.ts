@@ -1,10 +1,13 @@
+import { Patient } from './users/entities/patient.entity';
 import { DataSourceOptions } from "typeorm";
 import { Appointment } from "./appointments/entities/appointment.entity";
 import { User } from "./users/entities/user.entity";
+import { dbType } from './utils/constants';
 require('dotenv').config()
 
 const config: Record<string, DataSourceOptions> = {
   surgery_db: {
+    name: dbType.SURGERY_DB,
     type: 'mysql',
     host: 'localhost',
     port: 3306,
@@ -15,9 +18,10 @@ const config: Record<string, DataSourceOptions> = {
     synchronize: true,
   },
   central_health_db: {
+    name: dbType.CENTRAL_HEALTH_DB,
     type: 'sqlite',
     database: 'vaccines.db',
-    entities: [User, Appointment],
+    entities: [Patient],
     synchronize: false,
   },
 } 

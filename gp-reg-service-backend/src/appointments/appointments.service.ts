@@ -1,16 +1,15 @@
 import { UsersService } from './../users/users.service';
-import { User } from './../users/entities/user.entity';
 import { Appointment } from './entities/appointment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { Repository } from 'typeorm';
+import { dbType } from 'src/utils/constants';
 
 @Injectable()
 export class AppointmentsService {
   constructor(
-    @InjectRepository(Appointment) private readonly appointmentRepo: Repository<Appointment>,
-    @InjectRepository(User) private readonly userRepo: Repository<User>,
+    @InjectRepository(Appointment, dbType.SURGERY_DB) private readonly appointmentRepo: Repository<Appointment>,
     private readonly userService: UsersService,
   ){}
 

@@ -12,6 +12,7 @@ import { AppointmentsModule } from './appointments/appointments.module';
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot(config.surgery_db),
+    TypeOrmModule.forRoot(config.central_health_db),
     UsersModule,
     AuthModule,
     AppointmentsModule

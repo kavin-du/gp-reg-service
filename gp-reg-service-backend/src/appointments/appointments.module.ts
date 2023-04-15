@@ -1,15 +1,15 @@
 import { UsersModule } from './../users/users.module';
-import { UsersService } from './../users/users.service';
 import { Appointment } from './entities/appointment.entity';
 import { User } from './../users/entities/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { AppointmentsController } from './appointments.controller';
+import { dbType } from 'src/utils/constants';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Appointment, User]),
+    TypeOrmModule.forFeature([Appointment], dbType.SURGERY_DB),
     UsersModule
   ],
   controllers: [AppointmentsController],

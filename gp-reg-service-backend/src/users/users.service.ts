@@ -1,3 +1,4 @@
+import { Patient } from './entities/patient.entity';
 import { jwtPayload } from './../utils/types';
 import { ConflictException, Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -7,11 +8,13 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
+import { dbType } from 'src/utils/constants';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>
+    @InjectRepository(User, dbType.SURGERY_DB) private readonly userRepository: Repository<User>,
+    @InjectRepository(Patient, dbType.CENTRAL_HEALTH_DB) private readonly patientRepo: Repository<Patient>
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -33,6 +36,7 @@ export class UsersService {
 
   findAll() {
     return this.userRepository.find();
+    // return this.patientRepo.find();
   }
 
   async findUserById(id: number) {
