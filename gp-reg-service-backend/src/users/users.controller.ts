@@ -1,3 +1,4 @@
+import { VaccinesService } from './../vaccines/vaccines.service';
 import { UpdateAppointmentDto } from './../appointments/dto/update-appointment.dto';
 import { AppointmentsService } from './../appointments/appointments.service';
 import { CreateAppointmentDto } from './../appointments/dto/create-appointment.dto';
@@ -13,6 +14,7 @@ export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly appointmentsService: AppointmentsService,
+    private readonly vaccineService: VaccinesService,
   ) { }
 
   @SkipAuth()
@@ -69,13 +71,11 @@ export class UsersController {
     return this.appointmentsService.cancelByUser(userId, appointmentId);
   }
 
-
   // ===== MEDICAL RECORDS =====
 
   @Get(':id/medical-records')
   getMedicalRecords(@Param('id', ParseIntPipe) id: number) {
-    // return this.appointmentsService.findManyByUser(id);
+    return this.vaccineService.findManyByUser(id);
   }
-
 
 }
