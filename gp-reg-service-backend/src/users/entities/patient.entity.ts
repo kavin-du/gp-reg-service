@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Vaccine } from './vaccine.entity';
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity({ name: 'patients' })
 export class Patient {
@@ -20,4 +21,7 @@ export class Patient {
 
   @Column()
   Postcode: string;
+
+  @OneToMany(() => Vaccine, (vaccine) => vaccine.patient)
+  vaccines: Vaccine[]
 }

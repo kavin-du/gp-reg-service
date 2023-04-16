@@ -1,3 +1,4 @@
+import { Vaccine } from './users/entities/vaccine.entity';
 import { Patient } from './users/entities/patient.entity';
 import { DataSourceOptions } from "typeorm";
 import { Appointment } from "./appointments/entities/appointment.entity";
@@ -21,7 +22,7 @@ const config: Record<string, DataSourceOptions> = {
     name: dbType.CENTRAL_HEALTH_DB,
     type: 'sqlite',
     database: 'vaccines.db',
-    entities: [Patient],
+    entities: [Patient, Vaccine],
     synchronize: false,
   },
 } 

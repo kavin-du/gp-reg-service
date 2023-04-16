@@ -1,3 +1,4 @@
+import { Vaccine } from './entities/vaccine.entity';
 import { Patient } from './entities/patient.entity';
 import { jwtPayload } from './../utils/types';
 import { ConflictException, Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
@@ -14,7 +15,8 @@ import { dbType } from 'src/utils/constants';
 export class UsersService {
   constructor(
     @InjectRepository(User, dbType.SURGERY_DB) private readonly userRepository: Repository<User>,
-    @InjectRepository(Patient, dbType.CENTRAL_HEALTH_DB) private readonly patientRepo: Repository<Patient>
+    @InjectRepository(Patient, dbType.CENTRAL_HEALTH_DB) private readonly patientRepo: Repository<Patient>,
+    @InjectRepository(Vaccine, dbType.CENTRAL_HEALTH_DB) private readonly vaccineRepo: Repository<Vaccine>,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
