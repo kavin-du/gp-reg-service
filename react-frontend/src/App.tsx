@@ -1,27 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.scss';
-import { Button } from 'govuk-react';
+import { Page } from 'govuk-react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Login from './components/auth/Login';
+import Home from './components/Home';
+import Signup from './components/auth/Signup';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Button> button</Button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Page>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Home/>} />
+          <Route path='/login' element={<Login/>} />
+          <Route path='/signup' element={<Signup/>} />
+        </Routes>
+      </BrowserRouter>
+    </Page>
   );
 }
 
