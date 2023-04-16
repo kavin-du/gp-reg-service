@@ -42,8 +42,7 @@ export class UsersService {
       createdAt: new Date(),
       roles: [Role.User]
     });
-    const { password, ...user } = await this.userRepository.save(newuser);
-    return user;
+    return this.userRepository.save(newuser);
   }
 
   findAll() {

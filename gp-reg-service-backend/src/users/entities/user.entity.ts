@@ -1,6 +1,7 @@
 import { Appointment } from './../../appointments/entities/appointment.entity';
 import { Role } from './../../roles/role.enum';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'users' })
 export class User {
@@ -25,7 +26,7 @@ export class User {
   @Column()
   postalCode: string;
 
-  @Column()
+  @Column() @Exclude()
   password: string;
 
   @Column()

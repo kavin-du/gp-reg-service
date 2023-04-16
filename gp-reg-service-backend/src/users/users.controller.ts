@@ -3,7 +3,7 @@ import { UpdateAppointmentDto } from './../appointments/dto/update-appointment.d
 import { AppointmentsService } from './../appointments/appointments.service';
 import { CreateAppointmentDto } from './../appointments/dto/create-appointment.dto';
 import { SkipAuth } from './../auth/skipauth.decorator';
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Request, Req, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Request, Req, Res, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -18,12 +18,14 @@ export class UsersController {
   ) { }
 
   @SkipAuth()
+  @UseInterceptors(ClassSerializerInterceptor)
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   findAll() {
     return this.usersService.findAll();
