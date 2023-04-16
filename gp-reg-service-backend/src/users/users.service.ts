@@ -1,4 +1,4 @@
-import { Vaccine } from './entities/vaccine.entity';
+import { VaccinesService } from './../vaccines/vaccines.service';
 import { Patient } from './entities/patient.entity';
 import { jwtPayload } from './../utils/types';
 import { ConflictException, Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
@@ -10,13 +10,14 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import * as bcrypt from 'bcrypt';
 import { dbType } from 'src/utils/constants';
+import { Vaccine } from 'src/vaccines/entities/vaccine.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User, dbType.SURGERY_DB) private readonly userRepository: Repository<User>,
     @InjectRepository(Patient, dbType.CENTRAL_HEALTH_DB) private readonly patientRepo: Repository<Patient>,
-    @InjectRepository(Vaccine, dbType.CENTRAL_HEALTH_DB) private readonly vaccineRepo: Repository<Vaccine>,
+    private readonly vaccineService: VaccinesService,
   ) {}
 
   async create(createUserDto: CreateUserDto) {

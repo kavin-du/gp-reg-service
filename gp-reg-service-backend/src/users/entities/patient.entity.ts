@@ -1,4 +1,4 @@
-import { Vaccine } from './vaccine.entity';
+import { Vaccine } from './../../vaccines/entities/vaccine.entity';
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity({ name: 'patients' })

@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { AppointmentsModule } from './appointments/appointments.module';
+import { VaccinesModule } from './vaccines/vaccines.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { AppointmentsModule } from './appointments/appointments.module';
     TypeOrmModule.forRoot(config.central_health_db),
     UsersModule,
     AuthModule,
-    AppointmentsModule
+    AppointmentsModule,
+    VaccinesModule
   ],
   controllers: [AppController],
   providers: [AppService],

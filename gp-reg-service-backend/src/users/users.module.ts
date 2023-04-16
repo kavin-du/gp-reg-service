@@ -1,4 +1,5 @@
-import { Vaccine } from './entities/vaccine.entity';
+import { VaccinesService } from './../vaccines/vaccines.service';
+import { Vaccine } from './../vaccines/entities/vaccine.entity';
 import { Patient } from './entities/patient.entity';
 import { AppointmentsService } from './../appointments/appointments.service';
 import { Module } from '@nestjs/common';
@@ -15,7 +16,7 @@ import { dbType } from 'src/utils/constants';
     TypeOrmModule.forFeature([Patient, Vaccine], dbType.CENTRAL_HEALTH_DB),
   ],
   controllers: [UsersController],
-  providers: [UsersService, AppointmentsService],
+  providers: [UsersService, AppointmentsService, VaccinesService],
   exports: [UsersService]
 })
 export class UsersModule {}

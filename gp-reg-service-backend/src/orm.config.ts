@@ -1,4 +1,4 @@
-import { Vaccine } from './users/entities/vaccine.entity';
+import { Vaccine } from './vaccines/entities/vaccine.entity';
 import { Patient } from './users/entities/patient.entity';
 import { DataSourceOptions } from "typeorm";
 import { Appointment } from "./appointments/entities/appointment.entity";

@@ -1,5 +1,5 @@
+import { Patient } from './../../users/entities/patient.entity';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
-import { Patient } from "./patient.entity";
 
 @Entity({ name: 'vaccines' })
 export class Vaccine {

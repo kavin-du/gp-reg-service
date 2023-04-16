@@ -27,11 +27,6 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id', ParseIntPipe) id: number) {
-  //   return this.usersService.findOne(+id);
-  // }
-
   @Patch(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(+id, updateUserDto);
@@ -73,4 +68,14 @@ export class UsersController {
   ) {
     return this.appointmentsService.cancelByUser(userId, appointmentId);
   }
+
+
+  // ===== MEDICAL RECORDS =====
+
+  @Get(':id/medical-records')
+  getMedicalRecords(@Param('id', ParseIntPipe) id: number) {
+    // return this.appointmentsService.findManyByUser(id);
+  }
+
+
 }
