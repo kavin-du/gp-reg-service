@@ -1,5 +1,5 @@
 import { Button, Link, Table } from 'govuk-react';
-import { appointmentType } from '../../utils/types';
+import { AppointmentType } from '../../utils/types';
 
 export default function AvailableAppointments() {
   const handleClick = (e: any) => {
@@ -32,7 +32,7 @@ export default function AvailableAppointments() {
       caption="List of available appointments"
       head={<Table.Row><Table.Cell>ID</Table.Cell><Table.Cell>Reason</Table.Cell><Table.Cell>Date</Table.Cell></Table.Row>}
     >
-      {apps.map((item: appointmentType) =>
+      {apps.map((item: AppointmentType) =>
         <Table.Row key={item.id}>
           <Table.Cell numeric>
             {item.id}
