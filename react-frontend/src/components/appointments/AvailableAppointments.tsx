@@ -1,7 +1,10 @@
-import { Table } from 'govuk-react';
+import { Button, Link, Table } from 'govuk-react';
 import { appointmentType } from '../../utils/types';
 
 export default function AvailableAppointments() {
+  const handleClick = (e: any) => {
+    e.preventDefault();
+  };
   const apps = [
     {
       "id": 1,
@@ -39,6 +42,9 @@ export default function AvailableAppointments() {
           </Table.Cell>
           <Table.Cell>
             {new Date(item.createdAt).toDateString()}
+          </Table.Cell>
+          <Table.Cell>
+            <a href='#' onClick={handleClick}>Cancel</a>
           </Table.Cell>
         </Table.Row>)}
     </Table>
