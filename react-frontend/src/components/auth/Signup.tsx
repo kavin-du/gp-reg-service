@@ -1,5 +1,4 @@
 import { GridRow, GridCol, H1, Paragraph, InputField, Button } from 'govuk-react'
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Signup() {

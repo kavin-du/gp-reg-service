@@ -1,4 +1,4 @@
-import { GridRow, GridCol, Table } from 'govuk-react';
+import { Table } from 'govuk-react';
 import { appointmentType } from '../../utils/types';
 
 export default function AvailableAppointments() {
@@ -10,7 +10,7 @@ export default function AvailableAppointments() {
     },
     {
       "id": 2,
-      "reason": "neck painneck painneck ",
+      "reason": "neck pain",
       "createdAt": "2023-04-16T18:01:58.000Z"
     },
     {
@@ -25,26 +25,22 @@ export default function AvailableAppointments() {
     }
   ];
   return (
-    <GridRow>
-      <GridCol setWidth="two-third">
-        <Table
-          caption="List of available appointments"
-          head={<Table.Row><Table.Cell>ID</Table.Cell><Table.Cell>Reason</Table.Cell><Table.Cell>Date</Table.Cell></Table.Row>}
-        >
-          {apps.map((item: appointmentType) =>
-            <Table.Row>
-              <Table.Cell numeric>
-                {item.id}
-              </Table.Cell>
-              <Table.Cell>
-                {item.reason}
-              </Table.Cell>
-              <Table.Cell>
-                {new Date(item.createdAt).toDateString()}
-              </Table.Cell>
-            </Table.Row>)}
-        </Table>
-      </GridCol>
-    </GridRow>
+    <Table
+      caption="List of available appointments"
+      head={<Table.Row><Table.Cell>ID</Table.Cell><Table.Cell>Reason</Table.Cell><Table.Cell>Date</Table.Cell></Table.Row>}
+    >
+      {apps.map((item: appointmentType) =>
+        <Table.Row key={item.id}>
+          <Table.Cell numeric>
+            {item.id}
+          </Table.Cell>
+          <Table.Cell>
+            {item.reason}
+          </Table.Cell>
+          <Table.Cell>
+            {new Date(item.createdAt).toDateString()}
+          </Table.Cell>
+        </Table.Row>)}
+    </Table>
   )
 }
