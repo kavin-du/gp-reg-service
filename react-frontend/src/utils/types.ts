@@ -23,3 +23,11 @@ export type VaccinationRecordType =  {
   ProcedureCode: number;
   Booster: boolean;
 }
+
+export type TokenData = {
+  nhsNumber: string;
+  sub: number;
+  roles: string[];
+  iat: number;
+  exp: number;
+}

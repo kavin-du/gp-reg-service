@@ -1,38 +1,36 @@
-import { Button, Link, Table } from 'govuk-react';
+import { Button, Link, Paragraph, Table } from 'govuk-react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import appointmentService from '../../services/appointment.service';
 import { AppointmentType } from '../../utils/types';
 
-export default function AvailableAppointments() {
+export default function AvailableAppointments(
+  { setIsLoading }: {setIsLoading: Dispatch<SetStateAction<boolean>>}
+  ) {
+  
+  const [appointments, setAppointments] = useState<AppointmentType[]>([]);
   const handleClick = (e: any) => {
     e.preventDefault();
   };
-  const apps = [
-    {
-      "id": 1,
-      "reason": "back pain",
-      "createdAt": "2023-04-16T18:01:29.000Z"
-    },
-    {
-      "id": 2,
-      "reason": "neck pain",
-      "createdAt": "2023-04-16T18:01:58.000Z"
-    },
-    {
-      "id": 3,
-      "reason": "diarrhea",
-      "createdAt": "2023-04-16T18:02:14.000Z"
-    },
-    {
-      "id": 4,
-      "reason": "insomnia",
-      "createdAt": "2023-04-16T18:02:51.000Z"
-    }
-  ];
-  return (
+  
+  useEffect(() => {
+    setIsLoading(true);
+    appointmentService.getForUser()
+      .then(res => {
+        setAppointments(res.data);
+        setIsLoading(false);
+      }).catch(e => {
+        setIsLoading(false);
+        console.log(e);
+      })
+  }, [])
+  
+
+  return appointments!.length > 0 ? (
     <Table
       caption="List of available appointments"
       head={<Table.Row><Table.Cell>ID</Table.Cell><Table.Cell>Reason</Table.Cell><Table.Cell>Date</Table.Cell></Table.Row>}
     >
-      {apps.map((item: AppointmentType) =>
+      {appointments?.map((item: AppointmentType) =>
         <Table.Row key={item.id}>
           <Table.Cell numeric>
             {item.id}
@@ -48,5 +46,5 @@ export default function AvailableAppointments() {
           </Table.Cell>
         </Table.Row>)}
     </Table>
-  )
+  ) : <Paragraph>No appointments available.</Paragraph>
 }

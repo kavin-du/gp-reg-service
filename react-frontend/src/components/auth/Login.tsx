@@ -1,4 +1,6 @@
+import axios from 'axios';
 import { Button, ErrorText, FormGroup, GridCol, GridRow, H1, Input, InputField, Label, LabelText, LoadingBox, Paragraph } from 'govuk-react'
+import jwtDecode from 'jwt-decode';
 import React, { useEffect, useState } from 'react'
 import { Form, Link, useNavigate } from 'react-router-dom';
 import authService from '../../services/auth.service';
@@ -27,6 +29,10 @@ export default function Login() {
       .then(res => {
         const access_token = res.data.access_token;
         localStorage.setItem('access_token', access_token);
+        const decodedToken = jwtDecode(access_token);
+        localStorage.setItem('user', JSON.stringify(decodedToken));
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
+
         setError('');
         setIsLoading(false);
         navigate('/appointments');
