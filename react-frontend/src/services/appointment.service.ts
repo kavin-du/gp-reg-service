@@ -5,10 +5,15 @@ class AppointmentService {
   private readonly userData: TokenData = JSON.parse(localStorage.getItem('user') as string);
   
   getForUser() {
-    console.log(this.userData);
     const { sub: id } = this.userData;
     return axios.get(`/users/${id}/appointments`);
   }
+
+  create(reason: string) {
+    const { sub: id } = this.userData;
+    return axios.post(`/users/${id}/appointments`, { reason });
+  }
+
 }
 
 export default new AppointmentService();

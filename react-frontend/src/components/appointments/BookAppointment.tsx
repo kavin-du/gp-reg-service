@@ -1,17 +1,50 @@
-import {Paragraph, Button, TextArea } from 'govuk-react'
+import { error } from 'console';
+import {Paragraph, Button, TextArea, ErrorText } from 'govuk-react'
+import { Dispatch, SetStateAction, useState } from 'react';
+import appointmentService from '../../services/appointment.service';
 
-export default function BookAppointment() {
+export default function BookAppointment(
+  { setIsLoading }: {setIsLoading: Dispatch<SetStateAction<boolean>>}
+  
+) {
+  const [reason, setReason] = useState<string>();
+  const [error, setError] = useState<string>();
+
+  const handleReasonChange = (e: any) => {
+    setReason(e.target.value)
+  }
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if(!reason) {
+      setError('Reason is empty!');
+      return;
+    }
+    setIsLoading(true);
+
+    appointmentService.create(reason)
+      .then(res => {
+        console.log(res.data);
+        setIsLoading(false);
+      }).catch(e => {
+        setIsLoading(false);
+        setError(e.message);
+      })
+
+  }
   return (
     <>
       <Paragraph>Book a new appointment</Paragraph>
       <TextArea
         mb={2}
         input={{
-          name: 'group1',
+          name: 'reason',
+          onChange: handleReasonChange
         }}
       > </TextArea>
 
-      <Button>Book</Button>
+      <Button type='submit' onClick={handleSubmit} >Book</Button>
+      {error && <ErrorText>{error}</ErrorText>}
     </>
   )
 }

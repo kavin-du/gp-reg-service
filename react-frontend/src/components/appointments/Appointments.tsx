@@ -13,7 +13,7 @@ export default function Appointments() {
           <AvailableAppointments setIsLoading={setIsLoading} />
         </GridCol>
         <GridCol setWidth={'one-third'}>
-          <BookAppointment />
+          <BookAppointment setIsLoading={setIsLoading} />
         </GridCol>
       </GridRow>
     </LoadingBox>

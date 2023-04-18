@@ -11,8 +11,6 @@ export default function Login() {
   const [error, setError] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleChange = (e: any) => {
-  }
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setIsLoading(true);
@@ -55,7 +53,6 @@ export default function Login() {
               input={{
                 name: 'nhs',
                 mb: 4,
-                onChange: handleChange
               }}
             >
               NHS Number
@@ -64,7 +61,6 @@ export default function Login() {
               input={{
                 name: 'pwd',
                 mb: 4,
-                onChange: handleChange,
                 type: 'password'
               }}
             >
