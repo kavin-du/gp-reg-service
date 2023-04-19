@@ -1,12 +1,15 @@
-import { Button, Link, Paragraph, Table } from 'govuk-react';
+import { Paragraph, Table } from 'govuk-react';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import appointmentService from '../../services/appointment.service';
 import { AppointmentType } from '../../utils/types';
+import { useDispatch } from 'react-redux';
+import { saveAppointments } from '../../redux/appointmentsSlice';
 
 export default function AvailableAppointments(
   { setIsLoading }: {setIsLoading: Dispatch<SetStateAction<boolean>>}
   ) {
   
+  const dispatch = useDispatch();
   const [appointments, setAppointments] = useState<AppointmentType[]>([]);
   const handleClick = (e: any) => {
     e.preventDefault();
@@ -17,6 +20,7 @@ export default function AvailableAppointments(
     appointmentService.getForUser()
       .then(res => {
         setAppointments(res.data);
+        dispatch(saveAppointments(res.data));
         setIsLoading(false);
       }).catch(e => {
         setIsLoading(false);
