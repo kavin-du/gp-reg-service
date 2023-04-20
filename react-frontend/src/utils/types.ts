@@ -31,3 +31,8 @@ export type TokenData = {
   iat: number;
   exp: number;
 }
+
+export type ListStateType = {
+  entities: [];
+  status: 'idle' | 'pending' | 'failed';
+}

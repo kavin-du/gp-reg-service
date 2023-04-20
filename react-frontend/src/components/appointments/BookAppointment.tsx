@@ -12,7 +12,7 @@ export default function BookAppointment(
   const [reason, setReason] = useState<string>();
   const [error, setError] = useState<string>();
 
-  const temp = useSelector((store: RootState) => store.appointments.entities);
+  // const temp = useSelector((store: RootState) => store.appointments.entities);
 
   const handleReasonChange = (e: any) => {
     setReason(e.target.value)
