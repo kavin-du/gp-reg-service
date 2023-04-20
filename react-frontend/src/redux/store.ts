@@ -1,8 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
-import appointmentsSlice from "./appointmentsSlice";
+import appointmentReducer from './appointmentsSlice';
 
-const store = configureStore({
-  reducer: appointmentsSlice,
+
+export const store = configureStore({
+  reducer: {
+    appointments: appointmentReducer
+  },
 });
 
-export default store;
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch

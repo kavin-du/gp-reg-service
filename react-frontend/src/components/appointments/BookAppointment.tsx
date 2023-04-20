@@ -2,6 +2,8 @@ import { error } from 'console';
 import {Paragraph, Button, TextArea, ErrorText } from 'govuk-react'
 import { Dispatch, SetStateAction, useState } from 'react';
 import appointmentService from '../../services/appointment.service';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 export default function BookAppointment(
   { setIsLoading }: {setIsLoading: Dispatch<SetStateAction<boolean>>}
@@ -9,6 +11,8 @@ export default function BookAppointment(
 ) {
   const [reason, setReason] = useState<string>();
   const [error, setError] = useState<string>();
+
+  const temp = useSelector((store: RootState) => store.appointments.entities);
 
   const handleReasonChange = (e: any) => {
     setReason(e.target.value)

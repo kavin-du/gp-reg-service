@@ -16,7 +16,7 @@ function App() {
     response => response,
     error => {
       let message: string = '';
-      if(error.response) {
+      if (error.response) {
         // response was made and server responded with status code
         message = error.response.data.message.toString();
       } else if (error.request) {
@@ -28,7 +28,7 @@ function App() {
       return Promise.reject({ message });
     }
   );
-  
+
   axios.interceptors.request.use(
     config => {
       if (!config.headers.Authorization) {
@@ -46,11 +46,11 @@ function App() {
     <Page>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Home/>} />
-          <Route path='/login' element={<Login/>} />
-          <Route path='/signup' element={<Signup/>} />
-          <Route path='/appointments' element={<Appointments/>} />
-          <Route path='/medical-records' element={<MedicalRecords/>} />
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/appointments' element={<Appointments />} />
+          <Route path='/medical-records' element={<MedicalRecords />} />
         </Routes>
       </BrowserRouter>
     </Page>
