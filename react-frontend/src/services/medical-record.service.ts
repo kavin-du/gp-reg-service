@@ -1,14 +1,12 @@
-import { TokenData } from './../utils/types';
+import { getUserId } from './../utils/getUserId';
 import axios from "axios";
 
 class MedicalRecordService {
-  private readonly userData: TokenData = JSON.parse(localStorage.getItem('user') as string);
   
   get() {
-    const { sub: id } = this.userData;
+    const id = getUserId();
     return axios.get(`/users/${id}/medical-records`);
   }
 }
 
-const medicalReordsService = new MedicalRecordService();
-export default medicalReordsService;
+export default new MedicalRecordService();

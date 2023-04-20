@@ -4,6 +4,7 @@ import jwtDecode from 'jwt-decode';
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import authService from '../../services/auth.service';
+import { ROUTES } from '../../utils/constants';
 
 export default function Login() {
 
@@ -33,7 +34,7 @@ export default function Login() {
 
         setError('');
         setIsLoading(false);
-        navigate('/appointments');
+        navigate(ROUTES.HOME);
       })
       .catch(e => {
         setIsLoading(false);

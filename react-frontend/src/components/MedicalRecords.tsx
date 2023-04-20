@@ -9,12 +9,13 @@ import PageWrapper from "./PageWrapper";
 
 export default function MedicalRecords() {
   const dispatch = useDispatch<AppDispatch>();
+
   const { entities: records, status } = useSelector((state: RootState) => state.medicalRecords);
 
   useEffect(() => {
     if (status === APICallStatus.IDLE) {
       dispatch(fetchMedicalRecords());
-    }
+    } 
   }, [dispatch, status]);
 
   return (
