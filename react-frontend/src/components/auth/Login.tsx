@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { Button, ErrorText, FormGroup, GridCol, GridRow, H1, Input, InputField, Label, LabelText, LoadingBox, Paragraph } from 'govuk-react'
+import { Button, ErrorText, GridCol, GridRow, H1, InputField, LoadingBox, Page, Paragraph } from 'govuk-react'
 import jwtDecode from 'jwt-decode';
-import React, { useEffect, useState } from 'react'
-import { Form, Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
 import authService from '../../services/auth.service';
 
 export default function Login() {
@@ -41,44 +41,44 @@ export default function Login() {
       });
   }
   return (
-    <>
-    <LoadingBox loading={isLoading}>
-      <GridRow>
-        <GridCol setWidth="one-half">
-          <H1>Login</H1>
-          <Paragraph>Please login using your NHS details.</Paragraph>
+    <Page>
+      <LoadingBox loading={isLoading}>
+        <GridRow>
+          <GridCol setWidth="one-half">
+            <H1>Login</H1>
+            <Paragraph>Please login using your NHS details.</Paragraph>
 
-          <form onSubmit={handleSubmit}>
-            <InputField
-              input={{
-                name: 'nhs',
-                mb: 4,
-              }}
-            >
-              NHS Number
-            </InputField>
-            <InputField
-              input={{
-                name: 'pwd',
-                mb: 4,
-                type: 'password'
-              }}
-            >
-              Password
-            </InputField>
-            <Button type='submit' >Login</Button>
-          </form>
+            <form onSubmit={handleSubmit}>
+              <InputField
+                input={{
+                  name: 'nhs',
+                  mb: 4,
+                }}
+              >
+                NHS Number
+              </InputField>
+              <InputField
+                input={{
+                  name: 'pwd',
+                  mb: 4,
+                  type: 'password'
+                }}
+              >
+                Password
+              </InputField>
+              <Button type='submit' >Login</Button>
+            </form>
 
-          {error && <ErrorText>{error}</ErrorText>}
+            {error && <ErrorText>{error}</ErrorText>}
 
-          <Paragraph mb={1}>
-            Don't have an account?
-          </Paragraph>
-          <Link to={'/signup'}>Sign up</Link>
+            <Paragraph mb={1}>
+              Don't have an account?
+            </Paragraph>
+            <Link to={'/signup'}>Sign up</Link>
 
-        </GridCol>
-      </GridRow>
+          </GridCol>
+        </GridRow>
       </LoadingBox>
-    </>
+    </Page>
   )
 }

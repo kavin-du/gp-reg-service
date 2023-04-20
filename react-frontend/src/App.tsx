@@ -1,5 +1,4 @@
 import './App.scss';
-import { Page } from 'govuk-react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './components/auth/Login';
 import Home from './components/Home';
@@ -7,7 +6,7 @@ import Signup from './components/auth/Signup';
 import Appointments from './components/appointments/Appointments';
 import MedicalRecords from './components/MedicalRecords';
 import axios from 'axios';
-import { Constants } from './utils/constants';
+import { Constants, ROUTES } from './utils/constants';
 
 
 function App() {
@@ -43,17 +42,15 @@ function App() {
   );
 
   return (
-    <Page>
-      <BrowserRouter>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/appointments' element={<Appointments />} />
-          <Route path='/medical-records' element={<MedicalRecords />} />
-        </Routes>
-      </BrowserRouter>
-    </Page>
+    <BrowserRouter>
+      <Routes>
+        <Route path={ROUTES.HOME} element={<Home />} />
+        <Route path={ROUTES.LOGIN} element={<Login />} />
+        <Route path={ROUTES.SIGNUP} element={<Signup />} />
+        <Route path={ROUTES.APPOINTMENTS} element={<Appointments />} />
+        <Route path={ROUTES.MEDICAL} element={<MedicalRecords />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

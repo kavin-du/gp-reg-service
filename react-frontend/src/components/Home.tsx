@@ -1,6 +1,9 @@
+import PageWrapper from "./PageWrapper";
 
 export default function Home() {
   return (
-    <div>Home</div>
+    <PageWrapper>
+      <div>Home</div>
+    </PageWrapper>
   )
 }

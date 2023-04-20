@@ -8,3 +8,11 @@ export enum APICallStatus {
   FAILED = 'failed',
   SUCCESS = 'success',
 }
+
+export enum ROUTES {
+  HOME = '/',
+  APPOINTMENTS = '/appointments',
+  MEDICAL = '/medical-records',
+  LOGIN = '/login',
+  SIGNUP = '/signup',
+}

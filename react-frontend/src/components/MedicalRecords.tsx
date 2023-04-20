@@ -5,6 +5,7 @@ import { fetchMedicalRecords } from "../redux/medicalRecordsSlice";
 import { AppDispatch, RootState } from "../redux/store";
 import { APICallStatus } from "../utils/constants";
 import { VaccinationRecordType } from "../utils/types";
+import PageWrapper from "./PageWrapper";
 
 export default function MedicalRecords() {
   const dispatch = useDispatch<AppDispatch>();
@@ -16,25 +17,28 @@ export default function MedicalRecords() {
     }
   }, [dispatch, status]);
 
-  return records.length > 0 ? (
-    <LoadingBox loading={status === APICallStatus.LOADING}>
-      <H1>Your Health Records</H1>
-      <GridRow>
-        <GridCol setWidth={'two-third'}>
-          {records.map((item: VaccinationRecordType, itemNo: number) =>
-            <Table key={itemNo}
-              caption={`Record No: ${itemNo + 1}`}
-            >
-              {Object.entries(item).map(([key, value], i) =>
-                <Table.Row key={i}>
-                  <Table.Cell>{key}</Table.Cell>
-                  <Table.Cell>{typeof value === 'boolean' ? value.toString() : value}</Table.Cell>
-                </Table.Row>
+  return (
+    <PageWrapper>
+      {records.length > 0 ? (
+        <LoadingBox loading={status === APICallStatus.LOADING}>
+          <H1>Your Health Records</H1>
+          <GridRow>
+            <GridCol setWidth={'two-third'}>
+              {records.map((item: VaccinationRecordType, itemNo: number) =>
+                <Table key={itemNo}
+                  caption={`Record No: ${itemNo + 1}`}
+                >
+                  {Object.entries(item).map(([key, value], i) =>
+                    <Table.Row key={i}>
+                      <Table.Cell>{key}</Table.Cell>
+                      <Table.Cell>{typeof value === 'boolean' ? value.toString() : value}</Table.Cell>
+                    </Table.Row>
+                  )}
+                </Table>
               )}
-            </Table>
-          )}
-        </GridCol>
-      </GridRow>
-    </LoadingBox>
-  ) : <Paragraph>No medical records available.</Paragraph>
+            </GridCol>
+          </GridRow>
+        </LoadingBox>
+      ) : <Paragraph>No medical records available.</Paragraph>}
+    </PageWrapper>)
 }
