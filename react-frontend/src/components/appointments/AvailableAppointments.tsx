@@ -1,17 +1,14 @@
 import { Paragraph, Table } from 'govuk-react';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import appointmentService from '../../services/appointment.service';
+import { useEffect } from 'react';
 import { AppointmentType } from '../../utils/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAppointments, saveAppointments } from '../../redux/appointmentsSlice';
+import { fetchAppointments } from '../../redux/appointmentsSlice';
 import { AppDispatch, RootState } from '../../redux/store';
+import { APICallStatus } from '../../utils/constants';
 
-export default function AvailableAppointments(
-  { setIsLoading }: {setIsLoading: Dispatch<SetStateAction<boolean>>}
-  ) {
+export default function AvailableAppointments() {
   
   const dispatch = useDispatch<AppDispatch>();
-  // const [appointments, setAppointments] = useState<AppointmentType[]>([]);
 
   const { entities: appointments, status: appointmentStatus, error } = useSelector((state: RootState) => state.appointments);
 
@@ -20,9 +17,10 @@ export default function AvailableAppointments(
   };
 
   useEffect(() => {
-    // only fetch if idle
-    dispatch(fetchAppointments());
-  }, [dispatch]);
+    if(appointmentStatus === APICallStatus.IDLE) {
+      dispatch(fetchAppointments());
+    }
+  }, [dispatch, appointmentStatus]);
   
 
   return appointments!.length > 0 ? (

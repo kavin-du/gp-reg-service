@@ -15,6 +15,18 @@ export const fetchAppointments = createAsyncThunk(
   }
 );
 
+export const createAppointment = createAsyncThunk(
+  'appointments/createAppointment',
+  async (reason: string, thunkApi) => {
+    try {
+      const resp = await appointmentService.create(reason);
+      return resp.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
 type AppointmentsStateType = ListStateType & {
   entities: AppointmentType[]
 }
@@ -29,11 +41,12 @@ const appointmentsSlice = createSlice({
   name: 'appointments',
   initialState,
   reducers: {
-    saveAppointments(state, action) {
-      state.entities = action.payload;
-    }
+    // saveAppointments(state, action) {
+    //   state.entities = action.payload;
+    // }
   },
   extraReducers: (builder) => {builder
+    // get appointment
     .addCase(fetchAppointments.fulfilled, (state, action) => {
       state.entities = action.payload;
       state.status =  APICallStatus.SUCCESS;
@@ -45,10 +58,21 @@ const appointmentsSlice = createSlice({
       state.status = APICallStatus.FAILED;
       state.error = action.payload as string ?? action.error.message;
     })
+    // create appointments
+    .addCase(createAppointment.fulfilled, (state, action) => {
+      state.status =  APICallStatus.IDLE; // to refresh all appointments again
+    })
+    .addCase(createAppointment.pending, (state, _) => {
+      state.status = APICallStatus.LOADING;
+    })
+    .addCase(createAppointment.rejected, (state, action) => {
+      state.status = APICallStatus.FAILED;
+      state.error = action.payload as string ?? action.error.message;
+    })
   }
 });
 
 
-export const { saveAppointments } = appointmentsSlice.actions;
+// export const { saveAppointments } = appointmentsSlice.actions;
 
 export default appointmentsSlice.reducer;

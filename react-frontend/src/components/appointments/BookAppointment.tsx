@@ -2,17 +2,15 @@ import { error } from 'console';
 import {Paragraph, Button, TextArea, ErrorText } from 'govuk-react'
 import { Dispatch, SetStateAction, useState } from 'react';
 import appointmentService from '../../services/appointment.service';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../redux/store';
+import { createAppointment } from '../../redux/appointmentsSlice';
 
-export default function BookAppointment(
-  { setIsLoading }: {setIsLoading: Dispatch<SetStateAction<boolean>>}
-  
-) {
+export default function BookAppointment() {
+  const dispatch = useDispatch<AppDispatch>();
+
   const [reason, setReason] = useState<string>();
   const [error, setError] = useState<string>();
-
-  // const temp = useSelector((store: RootState) => store.appointments.entities);
 
   const handleReasonChange = (e: any) => {
     setReason(e.target.value)
@@ -24,17 +22,8 @@ export default function BookAppointment(
       setError('Reason is empty!');
       return;
     }
-    setIsLoading(true);
-
-    appointmentService.create(reason)
-      .then(res => {
-        console.log(res.data);
-        setIsLoading(false);
-      }).catch(e => {
-        setIsLoading(false);
-        setError(e.message);
-      })
-
+    dispatch(createAppointment(reason));
+    setReason('');
   }
   return (
     <>
@@ -43,6 +32,7 @@ export default function BookAppointment(
         mb={2}
         input={{
           name: 'reason',
+          value: reason,
           onChange: handleReasonChange
         }}
       > </TextArea>
