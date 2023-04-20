@@ -2,7 +2,7 @@ import { Paragraph, Table } from 'govuk-react';
 import { useEffect } from 'react';
 import { AppointmentType } from '../../utils/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAppointments } from '../../redux/appointmentsSlice';
+import { deleteAppointment, fetchAppointments } from '../../redux/appointmentsSlice';
 import { AppDispatch, RootState } from '../../redux/store';
 import { APICallStatus } from '../../utils/constants';
 
@@ -12,8 +12,8 @@ export default function AvailableAppointments() {
 
   const { entities: appointments, status: appointmentStatus, error } = useSelector((state: RootState) => state.appointments);
 
-  const handleClick = (e: any) => {
-    e.preventDefault();
+  const handleDelete = (id: number) => {
+    dispatch(deleteAppointment(id));
   };
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function AvailableAppointments() {
             {new Date(item.createdAt).toDateString()}
           </Table.Cell>
           <Table.Cell>
-            <a href='#' onClick={handleClick}>Cancel</a>
+            <a href='#' onClick={() => handleDelete(item.id)}>Cancel</a>
           </Table.Cell>
         </Table.Row>)}
     </Table>

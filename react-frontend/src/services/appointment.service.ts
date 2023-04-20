@@ -14,6 +14,11 @@ class AppointmentService {
     return axios.post(`/users/${id}/appointments`, { reason });
   }
 
+  delete(appId: number) {
+    const { sub: id } = this.userData;
+    return axios.delete(`/users/${id}/appointments/${appId}`);
+  }
+
 }
 
 export default new AppointmentService();
