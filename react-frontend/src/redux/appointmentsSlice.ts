@@ -44,7 +44,7 @@ type AppointmentsStateType = ListStateType & {
 }
 
 const initialState = {
-  status: 'idle',
+  status: APICallStatus.IDLE,
   entities: [],
   error: undefined,
 } as AppointmentsStateType;
