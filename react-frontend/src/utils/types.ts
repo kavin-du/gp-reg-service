@@ -1,3 +1,4 @@
+import { APICallStatus } from './constants';
 export type AppointmentType = {
   id: number;
   reason: string;
@@ -34,5 +35,6 @@ export type TokenData = {
 
 export type ListStateType = {
   entities: [];
-  status: 'idle' | 'pending' | 'failed';
+  status: APICallStatus;
+  error: string | undefined;
 }

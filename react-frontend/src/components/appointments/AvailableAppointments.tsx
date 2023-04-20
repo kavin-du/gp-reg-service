@@ -2,31 +2,27 @@ import { Paragraph, Table } from 'govuk-react';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import appointmentService from '../../services/appointment.service';
 import { AppointmentType } from '../../utils/types';
-import { useDispatch } from 'react-redux';
-import { saveAppointments } from '../../redux/appointmentsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAppointments, saveAppointments } from '../../redux/appointmentsSlice';
+import { AppDispatch, RootState } from '../../redux/store';
 
 export default function AvailableAppointments(
   { setIsLoading }: {setIsLoading: Dispatch<SetStateAction<boolean>>}
   ) {
   
-  const dispatch = useDispatch();
-  const [appointments, setAppointments] = useState<AppointmentType[]>([]);
+  const dispatch = useDispatch<AppDispatch>();
+  // const [appointments, setAppointments] = useState<AppointmentType[]>([]);
+
+  const { entities: appointments, status: appointmentStatus, error } = useSelector((state: RootState) => state.appointments);
+
   const handleClick = (e: any) => {
     e.preventDefault();
   };
-  
+
   useEffect(() => {
-    setIsLoading(true);
-    appointmentService.getForUser()
-      .then(res => {
-        setAppointments(res.data);
-        dispatch(saveAppointments(res.data));
-        setIsLoading(false);
-      }).catch(e => {
-        setIsLoading(false);
-        console.log(e);
-      })
-  }, [])
+    // only fetch if idle
+    dispatch(fetchAppointments());
+  }, [dispatch]);
   
 
   return appointments!.length > 0 ? (
