@@ -1,8 +1,13 @@
-import { APICallStatus } from './constants';
+import { APICallStatus, Role } from './constants';
 export type AppointmentType = {
   id: number;
   reason: string;
   createdAt: string;
+  user?: {
+    nhsNumber: string;
+    firstname: string;
+    surname: string;
+  }
 }
 
 export type VaccinationRecordType =  {
@@ -28,7 +33,7 @@ export type VaccinationRecordType =  {
 export type TokenData = {
   nhsNumber: string;
   sub: number;
-  roles: string[];
+  roles: Role[];
   iat: number;
   exp: number;
 }

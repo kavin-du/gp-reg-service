@@ -1,17 +1,18 @@
 import { Page, TopNav } from 'govuk-react'
 import{ PropsWithChildren } from 'react'
 import { Link } from 'react-router-dom';
+import { ROUTES } from '../utils/constants';
 
 const NavBar = () => {
   return (
-    <TopNav>
-      <Link to="/" style={linkStyle}>
+    <TopNav serviceTitle={<TopNav.NavLink>GP Registration Service</TopNav.NavLink>}>
+      <Link to={ROUTES.HOME} style={linkStyle}>
         Home
       </Link>
-      <Link to="/appointments" style={linkStyle}>
+      <Link to={ROUTES.APPOINTMENTS} style={linkStyle}>
         Appointments
       </Link>
-      <Link to="/medical-records" style={linkStyle}>
+      <Link to={ROUTES.MEDICAL} style={linkStyle}>
         Medical Records
       </Link>
     </TopNav>

@@ -3,11 +3,23 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import appointmentService from "../services/appointment.service";
 import { APICallStatus } from '../utils/constants';
 
-export const fetchAppointments = createAsyncThunk(
-  'appointments/fetchAppointments',
+export const fetchUserAppointments = createAsyncThunk(
+  'appointments/fetchUserAppointments',
   async (_, thunkApi) => {
     try {
       const resp = await appointmentService.getForUser();
+      return resp.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchAllAppointments = createAsyncThunk(
+  'appointments/fetchAllAppointments',
+  async (_, thunkApi) => {
+    try {
+      const resp = await appointmentService.getAll();
       return resp.data;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
@@ -58,15 +70,27 @@ const appointmentsSlice = createSlice({
     // }
   },
   extraReducers: (builder) => {builder
-    // get appointment
-    .addCase(fetchAppointments.fulfilled, (state, action) => {
+    // get user appointments
+    .addCase(fetchUserAppointments.fulfilled, (state, action) => {
       state.entities = action.payload;
       state.status =  APICallStatus.SUCCESS;
     })
-    .addCase(fetchAppointments.pending, (state, _) => {
+    .addCase(fetchUserAppointments.pending, (state, _) => {
       state.status = APICallStatus.LOADING;
     })
-    .addCase(fetchAppointments.rejected, (state, action) => {
+    .addCase(fetchUserAppointments.rejected, (state, action) => {
+      state.status = APICallStatus.FAILED;
+      state.error = action.payload as string ?? action.error.message;
+    })
+    // get all appointments
+    .addCase(fetchAllAppointments.fulfilled, (state, action) => {
+      state.entities = action.payload;
+      state.status =  APICallStatus.SUCCESS;
+    })
+    .addCase(fetchAllAppointments.pending, (state, _) => {
+      state.status = APICallStatus.LOADING;
+    })
+    .addCase(fetchAllAppointments.rejected, (state, action) => {
       state.status = APICallStatus.FAILED;
       state.error = action.payload as string ?? action.error.message;
     })

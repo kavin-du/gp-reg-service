@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Button, ErrorText, GridCol, GridRow, H1, InputField, LoadingBox, Page, Paragraph } from 'govuk-react'
+import { Button, ErrorText, GridCol, GridRow, H1, InputField, LoadingBox, Page, Paragraph, TopNav } from 'govuk-react'
 import jwtDecode from 'jwt-decode';
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
@@ -42,7 +42,7 @@ export default function Login() {
       });
   }
   return (
-    <Page>
+    <Page header={<TopNav serviceTitle={<TopNav.NavLink>GP Registration Service</TopNav.NavLink>}></TopNav>}>
       <LoadingBox loading={isLoading}>
         <GridRow>
           <GridCol setWidth="one-half">

@@ -16,3 +16,9 @@ export enum ROUTES {
   LOGIN = '/login',
   SIGNUP = '/signup',
 }
+
+export enum Role {
+  USER = 'user',
+  DOCTOR = 'doctor',
+  ADMIN = 'admin',
+}

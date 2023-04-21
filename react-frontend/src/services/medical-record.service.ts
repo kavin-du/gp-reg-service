@@ -1,10 +1,10 @@
-import { getUserId } from './../utils/getUserId';
+import { getUser } from '../utils/getUser';
 import axios from "axios";
 
 class MedicalRecordService {
   
   get() {
-    const id = getUserId();
+    const {sub: id} = getUser();
     return axios.get(`/users/${id}/medical-records`);
   }
 }

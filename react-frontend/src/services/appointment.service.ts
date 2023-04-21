@@ -1,20 +1,24 @@
-import { getUserId } from './../utils/getUserId';
+import { getUser } from '../utils/getUser';
 import axios from "axios";
 
 class AppointmentService {
   
   getForUser() {
-    const id = getUserId();
+    const {sub: id} = getUser();
     return axios.get(`/users/${id}/appointments`);
   }
 
+  getAll() {
+    return axios.get(`/appointments`);
+  }
+
   create(reason: string) {
-    const id = getUserId();
+    const {sub: id} = getUser();
     return axios.post(`/users/${id}/appointments`, { reason });
   }
 
   delete(appId: number) {
-    const id = getUserId();
+    const {sub: id} = getUser();
     return axios.delete(`/users/${id}/appointments/${appId}`);
   }
 

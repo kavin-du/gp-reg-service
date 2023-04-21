@@ -2,11 +2,11 @@ import { Paragraph, Table } from 'govuk-react';
 import { useEffect } from 'react';
 import { AppointmentType } from '../../utils/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteAppointment, fetchAppointments } from '../../redux/appointmentsSlice';
+import { deleteAppointment, fetchUserAppointments } from '../../redux/appointmentsSlice';
 import { AppDispatch, RootState } from '../../redux/store';
 import { APICallStatus } from '../../utils/constants';
 
-export default function AvailableAppointments() {
+export default function UserAppointments() {
   
   const dispatch = useDispatch<AppDispatch>();
 
@@ -18,7 +18,7 @@ export default function AvailableAppointments() {
 
   useEffect(() => {
     if(appointmentStatus === APICallStatus.IDLE) {
-      dispatch(fetchAppointments());
+      dispatch(fetchUserAppointments());
     }
   }, [dispatch, appointmentStatus]);
   
