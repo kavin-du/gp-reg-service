@@ -12,10 +12,10 @@ export class AppointmentsController {
   //   return this.appointmentsService.create(createAppointmentDto);
   // }
 
-  // @Get()
-  // findAll() {
-  //   return this.appointmentsService.findAll();
-  // }
+  @Get()
+  findAll() {
+    return this.appointmentsService.findAll();
+  }
 
   // @Get(':id')
   // findOne(@Param('id') id: string) {

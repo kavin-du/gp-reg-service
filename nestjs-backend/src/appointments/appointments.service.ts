@@ -52,4 +52,18 @@ export class AppointmentsService {
     return this.appointmentRepo.update(appid, { ...updateAppointmentDto })
   }
 
+  findAll() {
+    return this.appointmentRepo.find({
+      relations: ['user'],
+      select: {
+        user: {
+          // list of necessary attributes of user relation
+          firstname: true,
+          surname: true,
+          nhsNumber: true,
+        },
+      },
+    });
+  }
+
 }

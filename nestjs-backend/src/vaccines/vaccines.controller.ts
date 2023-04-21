@@ -3,7 +3,7 @@ import { VaccinesService } from './vaccines.service';
 import { CreateVaccineDto } from './dto/create-vaccine.dto';
 import { UpdateVaccineDto } from './dto/update-vaccine.dto';
 
-@Controller('vaccines')
+@Controller('medical-records')
 export class VaccinesController {
   constructor(private readonly vaccinesService: VaccinesService) {}
 
