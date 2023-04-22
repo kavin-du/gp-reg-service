@@ -22,6 +22,7 @@ export default function Login() {
 
     if (!nhsNumber || !password) {
       setError('Login details cannot be empty!');
+      setIsLoading(false);
       return;
     }
     authService.login(nhsNumber, password)
