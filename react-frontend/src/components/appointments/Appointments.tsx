@@ -18,7 +18,7 @@ export default function Appointments() {
   return (
     <PageWrapper>
       <LoadingBox loading={appointmentsStatus === APICallStatus.LOADING}>
-        { roles.includes(Role.USER) ? <GridRow>
+        { roles.includes(Role.PATIENT) ? <GridRow>
           <GridCol setWidth={'two-third'}>
             <UserAppointments />
           </GridCol>

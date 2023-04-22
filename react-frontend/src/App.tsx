@@ -22,7 +22,8 @@ function App() {
         message = error.response.data.message.toString();
       } else if (error.request) {
         // request was made but no response was received
-        message = error.request;
+        // message = error.request;
+        message = 'Please check your connection!';
       } else {
         message = error.message;
       }

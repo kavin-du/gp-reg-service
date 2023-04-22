@@ -1,14 +1,15 @@
 import axios from 'axios';
-import { Button, ErrorText, GridCol, GridRow, H1, InputField, LoadingBox, Page, Paragraph, TopNav } from 'govuk-react'
+import { Button, DateField, ErrorText, GridCol, GridRow, H1, InputField, LoadingBox, Page, Paragraph, Radio, TopNav } from 'govuk-react'
 import jwtDecode from 'jwt-decode';
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import authService from '../../services/auth.service';
-import { ROUTES } from '../../utils/constants';
+import { Role, ROUTES } from '../../utils/constants';
 
 export default function Login() {
 
   const navigate = useNavigate();
+  const [role, setRole] = useState<Role>(Role.PATIENT);
   const [error, setError] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -25,7 +26,7 @@ export default function Login() {
       setIsLoading(false);
       return;
     }
-    authService.login(nhsNumber, password)
+    authService.login(nhsNumber, password, role)
       .then(res => {
         const access_token = res.data.access_token;
         localStorage.setItem('access_token', access_token);
@@ -68,6 +69,9 @@ export default function Login() {
               >
                 Password
               </InputField>
+              <Radio inline name="userType" value={Role.PATIENT} checked={role === Role.PATIENT} onChange={() => setRole(Role.PATIENT)} >Patient</Radio>
+              <Radio inline name="userType" value={Role.ADMIN} checked={role === Role.ADMIN} onChange={() => setRole(Role.ADMIN)}>Receptionist</Radio>
+              <Radio inline name="userType" value={Role.DOCTOR} checked={role === Role.DOCTOR} onChange={() => setRole(Role.DOCTOR)}>Doctor</Radio>
               <Button type='submit' >Login</Button>
             </form>
 

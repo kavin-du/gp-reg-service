@@ -19,7 +19,7 @@ export enum ROUTES {
 }
 
 export enum Role {
-  USER = 'user',
+  PATIENT = 'patient',
   DOCTOR = 'doctor',
   ADMIN = 'admin',
 }
