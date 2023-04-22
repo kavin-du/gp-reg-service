@@ -35,9 +35,10 @@ export default function Signup() {
     }
 
     setIsLoading(true);
-
+    
     authService.register(nhsNumber, firstname, surname, password1, role)
-      .then(_ => {
+    .then(_ => {
+        document.forms[0].reset();
         setError('Successfully created the user. Please Login.');
       })
       .catch(e => {
@@ -52,7 +53,7 @@ export default function Signup() {
     <Page header={<TopNav serviceTitle={<TopNav.NavLink>GP Registration Service</TopNav.NavLink>}></TopNav>}>
       <LoadingBox loading={isLoading}>
         <GridRow>
-          <GridCol setWidth="one-half">
+          <GridCol setWidth="two-third">
             <H1>Create an account</H1>
             <Paragraph>Please provide the following details.</Paragraph>
             <form onSubmit={handleSubmit} >

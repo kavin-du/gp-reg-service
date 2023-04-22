@@ -48,7 +48,7 @@ export default function Login() {
     <Page header={<TopNav serviceTitle={<TopNav.NavLink>GP Registration Service</TopNav.NavLink>}></TopNav>}>
       <LoadingBox loading={isLoading}>
         <GridRow>
-          <GridCol setWidth="one-half">
+          <GridCol setWidth="two-third">
             <H1>Login</H1>
             <Paragraph>Please login using your NHS details.</Paragraph>
 
