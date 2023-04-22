@@ -6,14 +6,17 @@ import { ROUTES } from '../utils/constants';
 const NavBar = () => {
   return (
     <TopNav serviceTitle={<TopNav.NavLink>GP Registration Service</TopNav.NavLink>}>
-      <Link to={ROUTES.HOME} style={linkStyle}>
-        Home
+      <Link to={ROUTES.LOGIN} style={linkStyle}>
+        Login
       </Link>
       <Link to={ROUTES.APPOINTMENTS} style={linkStyle}>
         Appointments
       </Link>
-      <Link to={ROUTES.MEDICAL} style={linkStyle}>
+      <Link to={ROUTES.USER_MEDICAL} style={linkStyle}>
         Medical Records
+      </Link>
+      <Link to={ROUTES.ALL_MEDICAL} style={linkStyle}>
+        All Medical Records
       </Link>
     </TopNav>
   );

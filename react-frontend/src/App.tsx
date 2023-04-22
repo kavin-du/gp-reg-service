@@ -4,9 +4,10 @@ import Login from './components/auth/Login';
 import Home from './components/Home';
 import Signup from './components/auth/Signup';
 import Appointments from './components/appointments/Appointments';
-import MedicalRecords from './components/MedicalRecords';
+import UserMedicalRecords from './components/medical-records/UserMedicalRecords';
 import axios from 'axios';
 import { Constants, ROUTES } from './utils/constants';
+import AllMedicalRecords from './components/medical-records/AllMedicalRecords';
 
 
 function App() {
@@ -48,7 +49,8 @@ function App() {
         <Route path={ROUTES.LOGIN} element={<Login />} />
         <Route path={ROUTES.SIGNUP} element={<Signup />} />
         <Route path={ROUTES.APPOINTMENTS} element={<Appointments />} />
-        <Route path={ROUTES.MEDICAL} element={<MedicalRecords />} />
+        <Route path={ROUTES.USER_MEDICAL} element={<UserMedicalRecords />} />
+        <Route path={ROUTES.ALL_MEDICAL} element={<AllMedicalRecords />} />
       </Routes>
     </BrowserRouter>
   );

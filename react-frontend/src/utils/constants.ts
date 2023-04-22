@@ -12,7 +12,8 @@ export enum APICallStatus {
 export enum ROUTES {
   HOME = '/',
   APPOINTMENTS = '/appointments',
-  MEDICAL = '/medical-records',
+  USER_MEDICAL = '/user-medical-records',
+  ALL_MEDICAL = '/all-medical-records',
   LOGIN = '/login',
   SIGNUP = '/signup',
 }

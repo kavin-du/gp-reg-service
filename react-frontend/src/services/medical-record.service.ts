@@ -3,9 +3,12 @@ import axios from "axios";
 
 class MedicalRecordService {
   
-  get() {
+  getUser() {
     const {sub: id} = getUser();
     return axios.get(`/users/${id}/medical-records`);
+  }
+  getAll() {
+    return axios.get(`/medical-records`);
   }
 }
 

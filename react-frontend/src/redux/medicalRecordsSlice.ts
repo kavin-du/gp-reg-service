@@ -3,11 +3,23 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { APICallStatus } from '../utils/constants';
 import medicalRecordService from '../services/medical-record.service';
 
-export const fetchMedicalRecords = createAsyncThunk(
-  'medical-records/fetch',
+export const fetchUserMedicalRecords = createAsyncThunk(
+  'medical-records/fetchUser',
   async (_, thunkApi) => {
     try {
-      const resp = await medicalRecordService.get();
+      const resp = await medicalRecordService.getUser();
+      return resp.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchAllMedicalRecords = createAsyncThunk(
+  'medical-records/fetcAll',
+  async (_, thunkApi) => {
+    try {
+      const resp = await medicalRecordService.getAll();
       return resp.data;
     } catch (error: any) {
       return thunkApi.rejectWithValue(error.message);
@@ -31,15 +43,28 @@ const medicalRecordsSlice = createSlice({
   reducers: {
   },
   extraReducers: (builder) => {builder
-    // get med records
-    .addCase(fetchMedicalRecords.fulfilled, (state, action) => {
+    // get user med records
+    .addCase(fetchUserMedicalRecords.fulfilled, (state, action) => {
       state.entities = action.payload;
       state.status =  APICallStatus.SUCCESS;
     })
-    .addCase(fetchMedicalRecords.pending, (state, _) => {
+    .addCase(fetchUserMedicalRecords.pending, (state, _) => {
       state.status = APICallStatus.LOADING;
     })
-    .addCase(fetchMedicalRecords.rejected, (state, action) => {
+    .addCase(fetchUserMedicalRecords.rejected, (state, action) => {
+      state.status = APICallStatus.FAILED;
+      state.error = action.payload as string ?? action.error.message;
+    })
+
+    // get all med records
+    .addCase(fetchAllMedicalRecords.fulfilled, (state, action) => {
+      state.entities = action.payload;
+      state.status =  APICallStatus.SUCCESS;
+    })
+    .addCase(fetchAllMedicalRecords.pending, (state, _) => {
+      state.status = APICallStatus.LOADING;
+    })
+    .addCase(fetchAllMedicalRecords.rejected, (state, action) => {
       state.status = APICallStatus.FAILED;
       state.error = action.payload as string ?? action.error.message;
     })
