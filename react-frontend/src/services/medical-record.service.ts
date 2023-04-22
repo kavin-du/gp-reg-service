@@ -1,4 +1,4 @@
-import { getUser } from '../utils/getUser';
+import { getUser } from '../utils/helpers';
 import axios from "axios";
 
 class MedicalRecordService {

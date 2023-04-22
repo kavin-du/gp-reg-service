@@ -1,5 +1,5 @@
 import './App.scss';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Login from './components/auth/Login';
 import Home from './components/Home';
 import Signup from './components/auth/Signup';
@@ -8,6 +8,7 @@ import UserMedicalRecords from './components/medical-records/UserMedicalRecords'
 import axios from 'axios';
 import { Constants, ROUTES } from './utils/constants';
 import AllMedicalRecords from './components/medical-records/AllMedicalRecords';
+import PrivateRoute from './components/auth/PrivateRoute';
 
 
 function App() {
@@ -45,12 +46,17 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={ROUTES.HOME} element={<Home />} />
+        {/* <Route path={ROUTES.HOME} element={<Home />} /> */}
+        {/* <Route path="*" element={<Navigate to="/login" replace={true} />} /> */}
+        <Route path={ROUTES.HOME} element={<Navigate to={ROUTES.LOGIN} replace />} />
         <Route path={ROUTES.LOGIN} element={<Login />} />
         <Route path={ROUTES.SIGNUP} element={<Signup />} />
-        <Route path={ROUTES.APPOINTMENTS} element={<Appointments />} />
-        <Route path={ROUTES.USER_MEDICAL} element={<UserMedicalRecords />} />
-        <Route path={ROUTES.ALL_MEDICAL} element={<AllMedicalRecords />} />
+
+        <Route element={<PrivateRoute />}>
+          <Route path={ROUTES.APPOINTMENTS} element={<Appointments />} />
+          <Route path={ROUTES.USER_MEDICAL} element={<UserMedicalRecords />} />
+          <Route path={ROUTES.ALL_MEDICAL} element={<AllMedicalRecords />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

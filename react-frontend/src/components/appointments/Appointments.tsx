@@ -1,9 +1,8 @@
 import { GridCol, GridRow, LoadingBox } from "govuk-react";
 import { useSelector } from "react-redux";
-import { fetchAllAppointments, fetchUserAppointments } from "../../redux/appointmentsSlice";
 import { RootState } from "../../redux/store";
 import { APICallStatus, Role } from "../../utils/constants";
-import { getUser } from "../../utils/getUser";
+import { getUser } from "../../utils/helpers";
 import PageWrapper from "../PageWrapper";
 import UserAppointments from "./UserAppointments";
 import BookAppointment from "./BookAppointment";

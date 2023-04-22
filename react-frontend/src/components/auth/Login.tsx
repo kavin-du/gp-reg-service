@@ -35,7 +35,7 @@ export default function Login() {
 
         setError('');
         setIsLoading(false);
-        navigate(ROUTES.HOME);
+        navigate(ROUTES.APPOINTMENTS);
       })
       .catch(e => {
         setIsLoading(false);

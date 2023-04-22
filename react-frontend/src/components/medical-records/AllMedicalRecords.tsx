@@ -22,7 +22,7 @@ export default function AllMedicalRecords() {
     <PageWrapper>
       {records.length > 0 ? (
         <LoadingBox loading={status === APICallStatus.LOADING}>
-          <H1>All Health Records</H1>
+          <H1>All Medical Records</H1>
           <GridRow>
             <GridCol setWidth={'two-third'}>
               {records.map((item: VaccinationRecordType, itemNo: number) =>
