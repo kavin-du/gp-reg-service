@@ -16,32 +16,32 @@ export default function Login() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    setIsLoading(true);
-
+    
     const { nhs, pwd } = document.forms[0];
     const nhsNumber = nhs.value;
     const password = pwd.value;
-
+    
     if (!nhsNumber || !password) {
       setError('Login details cannot be empty!');
-      setIsLoading(false);
       return;
     }
+    
+    setIsLoading(true);
     authService.login(nhsNumber, password, role)
       .then(res => {
         const access_token = res.data.access_token;
         localStorage.setItem('access_token', access_token);
         const decodedToken = jwtDecode(access_token);
         localStorage.setItem('user', JSON.stringify(decodedToken));
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
 
         setError('');
-        setIsLoading(false);
         navigate(ROUTES.APPOINTMENTS);
       })
       .catch(e => {
-        setIsLoading(false);
         setError(e.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
   return (
