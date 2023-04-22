@@ -1,4 +1,4 @@
-import { Page, TopNav } from 'govuk-react'
+import { Button, H2, Page, TopNav } from 'govuk-react'
 import{ PropsWithChildren } from 'react'
 import { Link } from 'react-router-dom';
 import { Role, ROUTES } from '../utils/constants';
@@ -15,7 +15,7 @@ const NavBar = () => {
         Medical Records
       </Link>}
       <Link to={ROUTES.LOGIN} style={linkStyle} onClick={logOut} replace>
-        Logout
+        <span style={{ color: 'green', fontWeight: 'bold' }}>Logout</span>
       </Link>
     </TopNav>
   );
