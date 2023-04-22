@@ -13,9 +13,23 @@ export class AuthController {
 
   @SkipAuth() // skip jwt auth
   @HttpCode(HttpStatus.OK)
-  @Post('login')
-  signIn(@Body() signInDto: SignInDto) {
-    return this.authService.signIn(signInDto.nhsNumber, signInDto.password);
+  @Post('login/patient')
+  signInPatient(@Body() signInDto: SignInDto) {
+    return this.authService.signIn(signInDto.nhsNumber, signInDto.password, Role.Patient);
+  }
+
+  @SkipAuth() 
+  @HttpCode(HttpStatus.OK)
+  @Post('login/doctor')
+  signInDoctor(@Body() signInDto: SignInDto) {
+    return this.authService.signIn(signInDto.nhsNumber, signInDto.password, Role.Doctor);
+  }
+
+  @SkipAuth() 
+  @HttpCode(HttpStatus.OK)
+  @Post('login/receptionist')
+  signInReceptionist(@Body() signInDto: SignInDto) {
+    return this.authService.signIn(signInDto.nhsNumber, signInDto.password, Role.Admin);
   }
 
   @Get('profile')

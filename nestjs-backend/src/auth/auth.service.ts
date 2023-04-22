@@ -1,3 +1,4 @@
+import { Role } from 'src/roles/role.enum';
 import { jwtPayload } from './../utils/types';
 import { UsersService } from './../users/users.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
@@ -11,8 +12,9 @@ export class AuthService {
     private jwtService: JwtService
   ) {}
 
-  async signIn(nhsNumber: string, pass: string): Promise<any> {
-    const user = await this.usersService.findByNHS(nhsNumber);
+  async signIn(nhsNumber: string, pass: string, role: Role): Promise<any> {
+    const user = await this.usersService.findByNHS(nhsNumber, role);
+
     if(!user) {
       throw new UnauthorizedException('Invalid username or password!');
     }

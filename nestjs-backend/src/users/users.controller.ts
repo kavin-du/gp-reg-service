@@ -1,3 +1,4 @@
+import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { VaccinesService } from './../vaccines/vaccines.service';
 import { UpdateAppointmentDto } from './../appointments/dto/update-appointment.dto';
 import { AppointmentsService } from './../appointments/appointments.service';
@@ -8,6 +9,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Response } from 'express';
+import { Role } from 'src/roles/role.enum';
 
 @Controller('users')
 export class UsersController {
@@ -19,9 +21,23 @@ export class UsersController {
 
   @SkipAuth()
   @UseInterceptors(ClassSerializerInterceptor)
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  @Post('patient')
+  createPatient(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.createPatient(createUserDto);
+  }
+
+  @SkipAuth()
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Post('receptionist')
+  createReceptionist(@Body() createRecepDto: CreateDoctorDto) {
+    return this.usersService.createDoctor(createRecepDto, Role.Admin);
+  }
+
+  @SkipAuth()
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Post('doctor')
+  createDoctor(@Body() createDocDto: CreateDoctorDto) {
+    return this.usersService.createDoctor(createDocDto, Role.Doctor);
   }
 
 

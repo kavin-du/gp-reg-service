@@ -1,3 +1,6 @@
+import { Receptionist } from './entities/receptionist.entity';
+import { Doctor } from './entities/doctor.entity';
+import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { Patient } from './entities/patient.entity';
 import { jwtPayload } from './../utils/types';
 import { ConflictException, Injectable, UnauthorizedException, NotFoundException } from '@nestjs/common';
@@ -14,12 +17,14 @@ import { dbType } from 'src/utils/constants';
 export class UsersService {
   constructor(
     @InjectRepository(User, dbType.SURGERY_DB) private readonly userRepository: Repository<User>,
+    @InjectRepository(Doctor, dbType.SURGERY_DB) private readonly docRepo: Repository<Doctor>,
+    @InjectRepository(Receptionist, dbType.SURGERY_DB) private readonly recepRepo: Repository<Receptionist>,
     @InjectRepository(Patient, dbType.CENTRAL_HEALTH_DB) private readonly patientRepo: Repository<Patient>,
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async createPatient(createUserDto: CreateUserDto) {
     // user from the surgery db
-    const oldUser = await this.findByNHS(createUserDto.nhsNumber);
+    const oldUser = await this.findByNHS(createUserDto.nhsNumber, Role.Patient);
     if(oldUser) {
       throw new ConflictException('User already exists.');
     }
@@ -40,9 +45,37 @@ export class UsersService {
       postalCode: oldRecord.Postcode,
       password: hashedPw,
       createdAt: new Date(),
-      roles: [Role.User]
+      roles: [Role.Patient]
     });
     return this.userRepository.save(newuser);
+  }
+
+  async createDoctor(createDocDto: CreateDoctorDto, role: Role) {
+    const oldUser = await this.findByNHS(createDocDto.nhsNumber, role);
+    if(oldUser) {
+      throw new ConflictException('User already exists.');
+    }
+    const hashedPw = await bcrypt.hash(createDocDto.password, 10);
+
+    if(role === Role.Doctor) {
+      const newuser = this.docRepo.create({
+        ...createDocDto,
+        password: hashedPw,
+        createdAt: new Date(),
+        roles: [role]
+      });
+      return this.docRepo.save(newuser);
+    }
+
+    const newuser = this.recepRepo.create({
+      ...createDocDto,
+      password: hashedPw,
+      createdAt: new Date(),
+      roles: [role]
+    });
+    return this.recepRepo.save(newuser);
+
+
   }
 
   findAll() {
@@ -57,8 +90,10 @@ export class UsersService {
     return user;
   }
   
-  findByNHS(nhsNumber: string) {
-    return this.userRepository.findOneBy({ nhsNumber });
+  findByNHS(nhsNumber: string, role: Role) {
+    if(role === Role.Patient) return this.userRepository.findOneBy({ nhsNumber });
+    if(role === Role.Doctor) return this.docRepo.findOneBy({ nhsNumber });
+    if(role === Role.Admin) return this.recepRepo.findOneBy({ nhsNumber });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

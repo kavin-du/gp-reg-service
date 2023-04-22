@@ -1,3 +1,5 @@
+import { Receptionist } from './entities/receptionist.entity';
+import { Doctor } from './entities/doctor.entity';
 import { VaccinesService } from './../vaccines/vaccines.service';
 import { Vaccine } from './../vaccines/entities/vaccine.entity';
 import { Patient } from './entities/patient.entity';
@@ -12,7 +14,7 @@ import { dbType } from 'src/utils/constants';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Appointment], dbType.SURGERY_DB),
+    TypeOrmModule.forFeature([User, Appointment, Doctor, Receptionist], dbType.SURGERY_DB),
     TypeOrmModule.forFeature([Patient, Vaccine], dbType.CENTRAL_HEALTH_DB),
   ],
   controllers: [UsersController],

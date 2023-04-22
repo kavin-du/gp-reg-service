@@ -1,3 +1,5 @@
+import { Receptionist } from './users/entities/receptionist.entity';
+import { Doctor } from './users/entities/doctor.entity';
 import { Vaccine } from './vaccines/entities/vaccine.entity';
 import { Patient } from './users/entities/patient.entity';
 import { DataSourceOptions } from "typeorm";
@@ -15,7 +17,7 @@ const config: Record<string, DataSourceOptions> = {
     username: `${process.env.MYSQL_USERNAME}`,
     password: `${process.env.MYSQL_PW}`,
     database: 'my_db',
-    entities: [User, Appointment],
+    entities: [User, Appointment, Doctor, Receptionist],
     synchronize: true,
   },
   central_health_db: {

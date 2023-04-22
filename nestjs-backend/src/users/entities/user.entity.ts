@@ -5,6 +5,10 @@ import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'users' })
 export class User {
+  /*
+    This class maps the central health db user to surgery db
+  */
+
   @PrimaryGeneratedColumn()
   id: number;
 
