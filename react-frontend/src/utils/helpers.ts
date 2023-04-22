@@ -17,3 +17,9 @@ export const checkAuth = (): boolean => {
   const expiry = payload.exp;
   return Math.floor(new Date().getTime() / 1000) < expiry;
 }
+
+export const logOut = () => {
+  localStorage.clear();
+  sessionStorage.clear();
+  window.location.reload();
+}

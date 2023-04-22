@@ -16,7 +16,7 @@ export const fetchUserMedicalRecords = createAsyncThunk(
 );
 
 export const fetchAllMedicalRecords = createAsyncThunk(
-  'medical-records/fetcAll',
+  'medical-records/fetchAll',
   async (_, thunkApi) => {
     try {
       const resp = await medicalRecordService.getAll();

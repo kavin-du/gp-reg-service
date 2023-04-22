@@ -4,7 +4,7 @@ import Login from './components/auth/Login';
 import Home from './components/Home';
 import Signup from './components/auth/Signup';
 import Appointments from './components/appointments/Appointments';
-import UserMedicalRecords from './components/medical-records/UserMedicalRecords';
+import MedicalRecords from './components/medical-records/MedicalRecords';
 import axios from 'axios';
 import { Constants, ROUTES } from './utils/constants';
 import AllMedicalRecords from './components/medical-records/AllMedicalRecords';
@@ -47,16 +47,15 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path={ROUTES.HOME} element={<Home />} /> */}
+        {/* <Route path={ROUTES.ROOT} element={<Home />} /> */}
         {/* <Route path="*" element={<Navigate to="/login" replace={true} />} /> */}
-        <Route path={ROUTES.HOME} element={<Navigate to={ROUTES.LOGIN} replace />} />
+        <Route path={ROUTES.ROOT} element={<Navigate to={ROUTES.LOGIN} replace />} />
         <Route path={ROUTES.LOGIN} element={<Login />} />
         <Route path={ROUTES.SIGNUP} element={<Signup />} />
 
         <Route element={<PrivateRoute />}>
           <Route path={ROUTES.APPOINTMENTS} element={<Appointments />} />
-          <Route path={ROUTES.USER_MEDICAL} element={<UserMedicalRecords />} />
-          <Route path={ROUTES.ALL_MEDICAL} element={<AllMedicalRecords />} />
+          <Route path={ROUTES.MEDICAL} element={<MedicalRecords />} />
         </Route>
       </Routes>
     </BrowserRouter>

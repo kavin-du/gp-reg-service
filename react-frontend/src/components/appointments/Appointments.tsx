@@ -13,7 +13,6 @@ export default function Appointments() {
 
   const appointmentsStatus = useSelector((state: RootState) => state.appointments.status);
   const { roles } = getUser();
-  // const roles = ['doctor'];
 
   return (
     <PageWrapper>
