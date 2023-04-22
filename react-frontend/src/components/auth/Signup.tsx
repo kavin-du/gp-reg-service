@@ -1,7 +1,12 @@
 import { GridRow, GridCol, H1, Paragraph, InputField, Button, Page } from 'govuk-react'
+import { useState } from 'react';
 import { Link } from 'react-router-dom'
+import { Role } from '../../utils/constants';
+import Radios from './Radios'
 
 export default function Signup() {
+  const [role, setRole] = useState<Role>(Role.PATIENT);
+
   return (
     <Page>
       <GridRow>
@@ -16,6 +21,24 @@ export default function Signup() {
           >
             NHS Number
           </InputField>
+          {role !== Role.PATIENT && <>
+            <InputField
+              input={{
+                name: 'group1',
+                mb: 4,
+              }}
+            >
+              First Name
+            </InputField>
+            <InputField
+              input={{
+                name: 'group1',
+                mb: 4,
+              }}
+            >
+              Surname
+            </InputField>
+          </>}
           <InputField
             input={{
               name: 'group1',
@@ -34,6 +57,7 @@ export default function Signup() {
           >
             Confirm password
           </InputField>
+          <Radios role={role} setRole={setRole} />
           <Button>Sign up</Button>
 
           <Paragraph mb={1}>

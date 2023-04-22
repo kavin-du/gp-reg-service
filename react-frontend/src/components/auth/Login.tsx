@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { Button, DateField, ErrorText, GridCol, GridRow, H1, InputField, LoadingBox, Page, Paragraph, Radio, TopNav } from 'govuk-react'
+import { Button, ErrorText, GridCol, GridRow, H1, InputField, LoadingBox, Page, Paragraph, TopNav } from 'govuk-react'
 import jwtDecode from 'jwt-decode';
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import authService from '../../services/auth.service';
 import { Role, ROUTES } from '../../utils/constants';
+import Radios from './Radios';
 
 export default function Login() {
 
@@ -69,9 +70,7 @@ export default function Login() {
               >
                 Password
               </InputField>
-              <Radio inline name="userType" value={Role.PATIENT} checked={role === Role.PATIENT} onChange={() => setRole(Role.PATIENT)} >Patient</Radio>
-              <Radio inline name="userType" value={Role.ADMIN} checked={role === Role.ADMIN} onChange={() => setRole(Role.ADMIN)}>Receptionist</Radio>
-              <Radio inline name="userType" value={Role.DOCTOR} checked={role === Role.DOCTOR} onChange={() => setRole(Role.DOCTOR)}>Doctor</Radio>
+              <Radios role={role} setRole={setRole} />
               <Button type='submit' >Login</Button>
             </form>
 
