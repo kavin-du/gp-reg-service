@@ -31,7 +31,7 @@ export type VaccinationRecordType =  {
 }
 
 export type TokenData = {
-  nhsNumber: string;
+  name: string;
   sub: number;
   roles: Role[];
   iat: number;

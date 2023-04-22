@@ -4,13 +4,15 @@ import { AppointmentType } from '../../utils/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteAppointment, fetchAllAppointments } from '../../redux/appointmentsSlice';
 import { AppDispatch, RootState } from '../../redux/store';
-import { APICallStatus } from '../../utils/constants';
+import { APICallStatus, Role } from '../../utils/constants';
+import { getUser } from '../../utils/helpers';
 
 export default function AllAppointments() {
   
   const dispatch = useDispatch<AppDispatch>();
 
   const { entities: appointments, status: appointmentStatus, error } = useSelector((state: RootState) => state.appointments);
+  const { roles } = getUser();
 
   const handleDelete = (id: number) => {
     dispatch(deleteAppointment(id));
@@ -52,9 +54,9 @@ export default function AllAppointments() {
           <Table.Cell>
             {new Date(item.createdAt).toDateString()}
           </Table.Cell>
-          <Table.Cell>
+          {!roles.includes(Role.DOCTOR) && <Table.Cell>
             <a href='#' onClick={() => handleDelete(item.id)}>Cancel</a>
-          </Table.Cell>
+          </Table.Cell>}
         </Table.Row>)}
     </Table>
   ) : <Paragraph>No appointments available.</Paragraph>

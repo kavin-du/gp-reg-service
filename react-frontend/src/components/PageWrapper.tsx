@@ -1,18 +1,19 @@
 import { Page, TopNav } from 'govuk-react'
 import{ PropsWithChildren } from 'react'
 import { Link } from 'react-router-dom';
-import { ROUTES } from '../utils/constants';
-import { logOut } from '../utils/helpers';
+import { Role, ROUTES } from '../utils/constants';
+import { getUser, logOut } from '../utils/helpers';
 
 const NavBar = () => {
+  const { name, roles } = getUser();
   return (
-    <TopNav serviceTitle={<TopNav.NavLink>GP Registration Service</TopNav.NavLink>}>
+    <TopNav serviceTitle={<TopNav.NavLink> {`Welcome ${name} (${roles[0]})`} </TopNav.NavLink>}>
       <Link to={ROUTES.APPOINTMENTS} style={linkStyle}>
         Appointments
       </Link>
-      <Link to={ROUTES.MEDICAL} style={linkStyle}>
+      {!roles.includes(Role.RECEPTIONIST) && <Link to={ROUTES.MEDICAL} style={linkStyle}>
         Medical Records
-      </Link>
+      </Link>}
       <Link to={ROUTES.LOGIN} style={linkStyle} onClick={logOut} replace>
         Logout
       </Link>
