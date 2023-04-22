@@ -1,5 +1,5 @@
 import { error } from 'console';
-import {Paragraph, Button, TextArea, ErrorText } from 'govuk-react'
+import { Paragraph, Button, TextArea, ErrorText, Input } from 'govuk-react'
 import { Dispatch, SetStateAction, useState } from 'react';
 import appointmentService from '../../services/appointment.service';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,7 +18,7 @@ export default function BookAppointment() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    if(!reason) {
+    if (!reason) {
       setError('Reason is empty!');
       return;
     }
@@ -28,14 +28,11 @@ export default function BookAppointment() {
   return (
     <>
       <Paragraph>Book a new appointment</Paragraph>
-      <TextArea
+      <Input
         mb={2}
-        input={{
-          name: 'reason',
-          value: reason,
-          onChange: handleReasonChange
-        }}
-      > </TextArea>
+        value={reason}
+        onChange={handleReasonChange}
+      />
 
       <Button type='submit' onClick={handleSubmit} >Book</Button>
       {error && <ErrorText>{error}</ErrorText>}

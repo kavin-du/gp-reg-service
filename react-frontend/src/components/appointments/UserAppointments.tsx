@@ -26,7 +26,12 @@ export default function UserAppointments() {
   return appointments!.length > 0 ? (
     <Table
       caption="List of available appointments"
-      head={<Table.Row><Table.Cell>ID</Table.Cell><Table.Cell>Reason</Table.Cell><Table.Cell>Date</Table.Cell></Table.Row>}
+      head={<Table.Row>
+        <Table.Cell>ID</Table.Cell>
+        <Table.Cell>Reason</Table.Cell>
+        <Table.Cell>Date</Table.Cell>
+        <Table.Cell></Table.Cell>
+        </Table.Row>}
     >
       {appointments?.map((item: AppointmentType) =>
         <Table.Row key={item.id}>
