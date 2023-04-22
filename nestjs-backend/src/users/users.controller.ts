@@ -30,7 +30,7 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('receptionist')
   createReceptionist(@Body() createRecepDto: CreateDoctorDto) {
-    return this.usersService.createDoctor(createRecepDto, Role.Admin);
+    return this.usersService.createDoctor(createRecepDto, Role.Receptionist);
   }
 
   @SkipAuth()

@@ -93,7 +93,7 @@ export class UsersService {
   findByNHS(nhsNumber: string, role: Role) {
     if(role === Role.Patient) return this.userRepository.findOneBy({ nhsNumber });
     if(role === Role.Doctor) return this.docRepo.findOneBy({ nhsNumber });
-    if(role === Role.Admin) return this.recepRepo.findOneBy({ nhsNumber });
+    if(role === Role.Receptionist) return this.recepRepo.findOneBy({ nhsNumber });
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

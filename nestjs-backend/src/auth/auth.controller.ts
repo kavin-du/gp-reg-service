@@ -29,11 +29,11 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login/receptionist')
   signInReceptionist(@Body() signInDto: SignInDto) {
-    return this.authService.signIn(signInDto.nhsNumber, signInDto.password, Role.Admin);
+    return this.authService.signIn(signInDto.nhsNumber, signInDto.password, Role.Receptionist);
   }
 
   @Get('profile')
-  @Roles(Role.Admin)
+  @Roles(Role.Receptionist)
   getProfile(@Request() req) {
     return req.user;
   }
