@@ -2,23 +2,49 @@ import { Button, H2, H3, H4, Paragraph, Table } from 'govuk-react';
 import { useEffect, useState } from 'react';
 import { AppointmentType } from '../../utils/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteAppointment, fetchUserAppointments } from '../../redux/appointmentsSlice';
+import { deleteAppointment, fetchUserAppointments, updateAppointment } from '../../redux/appointmentsSlice';
 import { AppDispatch, RootState } from '../../redux/store';
 import { APICallStatus } from '../../utils/constants';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
+type NewReasonType = {
+  id?: number;
+  reason?: string;
+}
+
 export default function UserAppointments() {
 
   const dispatch = useDispatch<AppDispatch>();
   const [showModal, setShowModel] = useState<boolean>(false);
-  const handleShow = () => setShowModel(true);
+  const [newReason, setNewReason] = useState<NewReasonType>();
+  const handleShow = (id: number) => {
+    // to make sure accidential update, we omit reason here to set overwrite the prev reason
+    // and set as undefined
+    setNewReason({
+      id
+    });
+    setShowModel(true)
+  };
   const handleClose = () => setShowModel(false);
+  const handleNewReasonChange = (e: any) => {
+    setNewReason({
+      ...newReason,
+      reason: e.target.value
+    });
+  }
 
   const { entities: appointments, status: appointmentStatus, error } = useSelector((state: RootState) => state.appointments);
 
   const handleDelete = (id: number) => {
     dispatch(deleteAppointment(id));
+  };
+
+  const handleUpdate = () => {
+    const id = newReason?.id as number;
+    const reason = newReason?.reason as string;
+    dispatch(updateAppointment({ id, reason }));
+    handleClose();
   };
 
   useEffect(() => {
@@ -51,7 +77,7 @@ export default function UserAppointments() {
               {new Date(item.createdAt).toDateString()}
             </Table.Cell>
             <Table.Cell>
-              <a href='#' onClick={handleShow}>Edit</a>
+              <a href='#' onClick={() => handleShow(item.id)}>Update</a>
             </Table.Cell>
             <Table.Cell>
               <a href='#' onClick={() => handleDelete(item.id)}>Cancel</a>
@@ -63,7 +89,7 @@ export default function UserAppointments() {
         show={showModal}
         backdrop="static"
         onHide={handleClose}
-        style={ { position: 'absolute'}}
+        centered
        >
       <Modal.Header closeButton>
         <Modal.Title>Edit your appointment</Modal.Title>
@@ -71,11 +97,11 @@ export default function UserAppointments() {
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Email address</Form.Label>
+            <Form.Label>New Reason</Form.Label>
             <Form.Control
-              type="email"
-              placeholder="name@example.com"
+              placeholder="type here"
               autoFocus
+              onChange={handleNewReasonChange}
             />
           </Form.Group>
         </Form>
@@ -84,7 +110,7 @@ export default function UserAppointments() {
         <Button buttonColour='#b1b4b6' onClick={handleClose}>
           Close
         </Button>
-        <Button onClick={handleClose}>
+        <Button onClick={handleUpdate}>
           Save Changes
         </Button>
       </Modal.Footer>

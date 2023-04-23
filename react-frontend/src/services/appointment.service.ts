@@ -22,6 +22,10 @@ class AppointmentService {
     return axios.delete(`/users/${id}/appointments/${appId}`);
   }
 
+  update(appId: number, reason: string) {
+    const {sub: id} = getUser();
+    return axios.patch(`/users/${id}/appointments/${appId}`, { reason });
+  }
 }
 
 export default new AppointmentService();

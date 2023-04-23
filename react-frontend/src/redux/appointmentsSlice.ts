@@ -51,6 +51,24 @@ export const deleteAppointment = createAsyncThunk(
   }
 );
 
+type UpdateAppointmenArgument = {
+  id: number;
+  reason: string;
+}
+
+export const updateAppointment = createAsyncThunk(
+  'appointments/updateAppointment',
+  async (payload: UpdateAppointmenArgument, thunkApi) => {
+    const { id, reason } = payload;
+    try {
+      const resp = await appointmentService.update(id, reason);
+      return resp.data;
+    } catch (error: any) {
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
 type AppointmentsStateType = ListStateType & {
   entities: AppointmentType[]
 }
@@ -113,6 +131,18 @@ const appointmentsSlice = createSlice({
       state.status = APICallStatus.LOADING;
     })
     .addCase(deleteAppointment.rejected, (state, action) => {
+      state.status = APICallStatus.FAILED;
+      state.error = action.payload as string ?? action.error.message;
+    })
+
+    // update appointment
+    .addCase(updateAppointment.fulfilled, (state, _) => {
+      state.status =  APICallStatus.IDLE; // to refresh all appointments again
+    })
+    .addCase(updateAppointment.pending, (state, _) => {
+      state.status = APICallStatus.LOADING;
+    })
+    .addCase(updateAppointment.rejected, (state, action) => {
       state.status = APICallStatus.FAILED;
       state.error = action.payload as string ?? action.error.message;
     })

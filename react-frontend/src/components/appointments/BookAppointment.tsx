@@ -9,7 +9,7 @@ import { createAppointment } from '../../redux/appointmentsSlice';
 export default function BookAppointment() {
   const dispatch = useDispatch<AppDispatch>();
 
-  const [reason, setReason] = useState<string>();
+  const [reason, setReason] = useState<string>('');
   const [error, setError] = useState<string>();
 
   const handleReasonChange = (e: any) => {
