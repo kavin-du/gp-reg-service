@@ -1,5 +1,14 @@
 # GP Registration Service
 
+Note: 
+When creating patient accounts you have to use the following NHS numbers because we need to have a medical record associated with each new patient. 
+
+- 94627888551
+- 94627899401
+- 94627903611
+- 94627928871
+- 94648146751
+
 ## Prerequisites
 
 - Node.js
@@ -29,7 +38,7 @@ MYSQL_PW=user256
 JWT_SECRET=mysecret123
 ```
 
-### 3. Start the MySQL Docker Instance
+### 3. Start the MySQL Database
 
 - If you are using a local MySQL installation, you need to change the host, port, username, pw in the `.env` file accordingly. 
 
