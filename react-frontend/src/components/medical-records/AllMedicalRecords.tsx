@@ -1,5 +1,5 @@
-import { GridCol, GridRow, H1, LoadingBox, Paragraph, Table } from "govuk-react";
-import { useEffect } from "react";
+import { Caption, GridCol, GridRow, H3, LoadingBox, Paragraph, Table } from "govuk-react";
+import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllMedicalRecords } from "../../redux/medicalRecordsSlice";
 import { AppDispatch, RootState } from "../../redux/store";
@@ -15,27 +15,28 @@ export default function AllMedicalRecords() {
   useEffect(() => {
     if (status === APICallStatus.IDLE) {
       dispatch(fetchAllMedicalRecords());
-    } 
+    }
   }, [dispatch, status]);
 
   return (
     <PageWrapper>
       {records.length > 0 ? (
         <LoadingBox loading={status === APICallStatus.LOADING}>
-          <H1>All Medical Records</H1>
+          <H3>All Medical Records</H3>
           <GridRow>
             <GridCol setWidth={'two-third'}>
               {records.map((item: VaccinationRecordType, itemNo: number) =>
-                <Table key={itemNo}
-                  caption={`Record No: ${itemNo + 1}`}
-                >
-                  {Object.entries(item).map(([key, value], i) =>
-                    <Table.Row key={i}>
-                      <Table.Cell>{key}</Table.Cell>
-                      <Table.Cell>{typeof value === 'boolean' ? value.toString() : value}</Table.Cell>
-                    </Table.Row>
-                  )}
-                </Table>
+                <Fragment key={itemNo}>
+                  <Caption size="M">{`Record No: ${itemNo + 1}`}</Caption>
+                  <Table>
+                    {Object.entries(item).map(([key, value], i) =>
+                      <Table.Row key={i}>
+                        <Table.Cell>{key}</Table.Cell>
+                        <Table.Cell>{typeof value === 'boolean' ? value.toString() : value}</Table.Cell>
+                      </Table.Row>
+                    )}
+                  </Table>
+                </Fragment>
               )}
             </GridCol>
           </GridRow>
