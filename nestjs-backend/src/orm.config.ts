@@ -12,8 +12,8 @@ const config: Record<string, DataSourceOptions> = {
   surgery_db: {
     name: dbType.SURGERY_DB,
     type: 'mysql',
-    host: 'localhost',
-    port: 3306,
+    host: `${process.env.MYSQL_HOST}`,
+    port: parseInt(`${process.env.MYSQL_PORT}`),
     username: `${process.env.MYSQL_USERNAME}`,
     password: `${process.env.MYSQL_PW}`,
     database: 'my_db',
