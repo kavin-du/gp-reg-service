@@ -1,14 +1,13 @@
 import './App.scss';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Login from './components/auth/Login';
-import Home from './components/Home';
 import Signup from './components/auth/Signup';
 import Appointments from './components/appointments/Appointments';
 import MedicalRecords from './components/medical-records/MedicalRecords';
 import axios from 'axios';
 import { Constants, ROUTES } from './utils/constants';
-import AllMedicalRecords from './components/medical-records/AllMedicalRecords';
 import PrivateRoute from './components/auth/PrivateRoute';
+import NotFoundPage from './components/NotFoundPage';
 
 
 function App() {
@@ -47,8 +46,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path={ROUTES.ROOT} element={<Home />} /> */}
-        {/* <Route path="*" element={<Navigate to="/login" replace={true} />} /> */}
         <Route path={ROUTES.ROOT} element={<Navigate to={ROUTES.LOGIN} replace />} />
         <Route path={ROUTES.LOGIN} element={<Login />} />
         <Route path={ROUTES.SIGNUP} element={<Signup />} />
@@ -57,6 +54,7 @@ function App() {
           <Route path={ROUTES.APPOINTMENTS} element={<Appointments />} />
           <Route path={ROUTES.MEDICAL} element={<MedicalRecords />} />
         </Route>
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,4 +1,4 @@
-import { Button, H2, H3, H4, Paragraph, Table } from 'govuk-react';
+import { Button, H3, Paragraph, Table } from 'govuk-react';
 import { useEffect, useState } from 'react';
 import { AppointmentType } from '../../utils/types';
 import { useDispatch, useSelector } from 'react-redux';
