@@ -1,7 +1,8 @@
 import { ListStateType, AppointmentType } from './../utils/types';
-import { ActionReducerMapBuilder, AsyncThunk, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import appointmentService from "../services/appointment.service";
 import { APICallStatus } from '../utils/constants';
+import { addBuilderCase } from '../utils/helpers';
 
 export const fetchUserAppointments = createAsyncThunk(
   'appointments/fetchUserAppointments',
@@ -68,30 +69,6 @@ export const updateAppointment = createAsyncThunk(
     }
   }
 );
-
-const addBuilderCase = (
-  builder: ActionReducerMapBuilder<any>, 
-  thunk: AsyncThunk<any, any, any>,
-  updateEntities: boolean = false
-  ) => {
-    builder 
-      .addCase(thunk.fulfilled, (state, action) => {
-        if(updateEntities) {
-          state.entities = action.payload;
-          state.status = APICallStatus.SUCCESS;
-        } 
-        // if there is nothing to update, then it is a create, put, delete call
-        // in that case, we need to to refresh all appointments again
-        else state.status = APICallStatus.FORCE_REFETCH;
-      })
-      .addCase(thunk.pending, (state, _) => {
-        state.status = APICallStatus.LOADING;
-      })
-      .addCase(thunk.rejected, (state, action: any) => {
-        state.status = APICallStatus.FAILED;
-        state.error = action.payload as string ?? action.error.message;
-      });
-}
 
 type AppointmentsStateType = ListStateType & {
   entities: AppointmentType[]

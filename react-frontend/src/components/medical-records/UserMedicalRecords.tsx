@@ -13,7 +13,7 @@ export default function UserMedicalRecords() {
   const { entities: records, status } = useSelector((state: RootState) => state.medicalRecords);
 
   useEffect(() => {
-    if (status === APICallStatus.IDLE) {
+    if (status === APICallStatus.IDLE || status === APICallStatus.FORCE_REFETCH) {
       dispatch(fetchUserMedicalRecords());
     }
   }, [dispatch, status]);
