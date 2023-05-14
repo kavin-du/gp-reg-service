@@ -1,4 +1,4 @@
-import { H3, H4, Paragraph, Table } from 'govuk-react';
+import { H3, Paragraph, Table } from 'govuk-react';
 import { useEffect } from 'react';
 import { AppointmentType } from '../../utils/types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,7 +19,7 @@ export default function AllAppointments() {
   };
 
   useEffect(() => {
-    if (appointmentStatus === APICallStatus.IDLE) {
+    if (appointmentStatus === APICallStatus.IDLE || appointmentStatus === APICallStatus.FORCE_REFETCH) {
       dispatch(fetchAllAppointments());
     }
   }, [dispatch, appointmentStatus]);

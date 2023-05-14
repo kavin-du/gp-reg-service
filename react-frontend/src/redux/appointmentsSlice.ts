@@ -2,6 +2,7 @@ import { ListStateType, AppointmentType } from './../utils/types';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import appointmentService from "../services/appointment.service";
 import { APICallStatus } from '../utils/constants';
+import { addBuilderCase } from '../utils/helpers';
 
 export const fetchUserAppointments = createAsyncThunk(
   'appointments/fetchUserAppointments',
@@ -87,66 +88,12 @@ const appointmentsSlice = createSlice({
     //   state.entities = action.payload;
     // }
   },
-  extraReducers: (builder) => {builder
-    // get user appointments
-    .addCase(fetchUserAppointments.fulfilled, (state, action) => {
-      state.entities = action.payload;
-      state.status =  APICallStatus.SUCCESS;
-    })
-    .addCase(fetchUserAppointments.pending, (state, _) => {
-      state.status = APICallStatus.LOADING;
-    })
-    .addCase(fetchUserAppointments.rejected, (state, action) => {
-      state.status = APICallStatus.FAILED;
-      state.error = action.payload as string ?? action.error.message;
-    })
-    // get all appointments
-    .addCase(fetchAllAppointments.fulfilled, (state, action) => {
-      state.entities = action.payload;
-      state.status =  APICallStatus.SUCCESS;
-    })
-    .addCase(fetchAllAppointments.pending, (state, _) => {
-      state.status = APICallStatus.LOADING;
-    })
-    .addCase(fetchAllAppointments.rejected, (state, action) => {
-      state.status = APICallStatus.FAILED;
-      state.error = action.payload as string ?? action.error.message;
-    })
-    // create appointments
-    .addCase(createAppointment.fulfilled, (state, _) => {
-      state.status =  APICallStatus.IDLE; // to refresh all appointments again
-    })
-    .addCase(createAppointment.pending, (state, _) => {
-      state.status = APICallStatus.LOADING;
-    })
-    .addCase(createAppointment.rejected, (state, action) => {
-      state.status = APICallStatus.FAILED;
-      state.error = action.payload as string ?? action.error.message;
-    })
-    // delete appointment
-    .addCase(deleteAppointment.fulfilled, (state, _) => {
-      state.status =  APICallStatus.IDLE; // to refresh all appointments again
-    })
-    .addCase(deleteAppointment.pending, (state, _) => {
-      state.status = APICallStatus.LOADING;
-    })
-    .addCase(deleteAppointment.rejected, (state, action) => {
-      state.status = APICallStatus.FAILED;
-      state.error = action.payload as string ?? action.error.message;
-    })
-
-    // update appointment
-    .addCase(updateAppointment.fulfilled, (state, _) => {
-      state.status =  APICallStatus.IDLE; // to refresh all appointments again
-    })
-    .addCase(updateAppointment.pending, (state, _) => {
-      state.status = APICallStatus.LOADING;
-    })
-    .addCase(updateAppointment.rejected, (state, action) => {
-      state.status = APICallStatus.FAILED;
-      state.error = action.payload as string ?? action.error.message;
-    })
-    
+  extraReducers: (builder) => {
+    addBuilderCase(builder, fetchUserAppointments, true);
+    addBuilderCase(builder, fetchAllAppointments, true);
+    addBuilderCase(builder, createAppointment);
+    addBuilderCase(builder, deleteAppointment);
+    addBuilderCase(builder, updateAppointment);
   }
 });
 

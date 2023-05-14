@@ -1,3 +1,4 @@
+import { addBuilderCase } from './../utils/helpers';
 import { ListStateType, VaccinationRecordType } from './../utils/types';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { APICallStatus } from '../utils/constants';
@@ -42,32 +43,9 @@ const medicalRecordsSlice = createSlice({
   initialState,
   reducers: {
   },
-  extraReducers: (builder) => {builder
-    // get user med records
-    .addCase(fetchUserMedicalRecords.fulfilled, (state, action) => {
-      state.entities = action.payload;
-      state.status =  APICallStatus.SUCCESS;
-    })
-    .addCase(fetchUserMedicalRecords.pending, (state, _) => {
-      state.status = APICallStatus.LOADING;
-    })
-    .addCase(fetchUserMedicalRecords.rejected, (state, action) => {
-      state.status = APICallStatus.FAILED;
-      state.error = action.payload as string ?? action.error.message;
-    })
-
-    // get all med records
-    .addCase(fetchAllMedicalRecords.fulfilled, (state, action) => {
-      state.entities = action.payload;
-      state.status =  APICallStatus.SUCCESS;
-    })
-    .addCase(fetchAllMedicalRecords.pending, (state, _) => {
-      state.status = APICallStatus.LOADING;
-    })
-    .addCase(fetchAllMedicalRecords.rejected, (state, action) => {
-      state.status = APICallStatus.FAILED;
-      state.error = action.payload as string ?? action.error.message;
-    })
+  extraReducers: (builder) => {
+    addBuilderCase(builder, fetchUserMedicalRecords, true);
+    addBuilderCase(builder, fetchAllMedicalRecords, true);
   }
 });
 
