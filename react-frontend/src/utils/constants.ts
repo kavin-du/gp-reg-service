@@ -7,6 +7,7 @@ export enum APICallStatus {
   LOADING = 'loading',
   FAILED = 'failed',
   SUCCESS = 'success',
+  FORCE_REFETCH = 'force_refetch'
 }
 
 export enum ROUTES {

@@ -1,5 +1,5 @@
 import { ListStateType, AppointmentType } from './../utils/types';
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { ActionReducerMapBuilder, AsyncThunk, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import appointmentService from "../services/appointment.service";
 import { APICallStatus } from '../utils/constants';
 
@@ -69,6 +69,30 @@ export const updateAppointment = createAsyncThunk(
   }
 );
 
+const addBuilderCase = (
+  builder: ActionReducerMapBuilder<any>, 
+  thunk: AsyncThunk<any, any, any>,
+  updateEntities: boolean = false
+  ) => {
+    builder 
+      .addCase(thunk.fulfilled, (state, action) => {
+        if(updateEntities) {
+          state.entities = action.payload;
+          state.status = APICallStatus.SUCCESS;
+        } 
+        // if there is nothing to update, then it is a create, put, delete call
+        // in that case, we need to to refresh all appointments again
+        else state.status = APICallStatus.FORCE_REFETCH;
+      })
+      .addCase(thunk.pending, (state, _) => {
+        state.status = APICallStatus.LOADING;
+      })
+      .addCase(thunk.rejected, (state, action: any) => {
+        state.status = APICallStatus.FAILED;
+        state.error = action.payload as string ?? action.error.message;
+      });
+}
+
 type AppointmentsStateType = ListStateType & {
   entities: AppointmentType[]
 }
@@ -87,66 +111,12 @@ const appointmentsSlice = createSlice({
     //   state.entities = action.payload;
     // }
   },
-  extraReducers: (builder) => {builder
-    // get user appointments
-    .addCase(fetchUserAppointments.fulfilled, (state, action) => {
-      state.entities = action.payload;
-      state.status =  APICallStatus.SUCCESS;
-    })
-    .addCase(fetchUserAppointments.pending, (state, _) => {
-      state.status = APICallStatus.LOADING;
-    })
-    .addCase(fetchUserAppointments.rejected, (state, action) => {
-      state.status = APICallStatus.FAILED;
-      state.error = action.payload as string ?? action.error.message;
-    })
-    // get all appointments
-    .addCase(fetchAllAppointments.fulfilled, (state, action) => {
-      state.entities = action.payload;
-      state.status =  APICallStatus.SUCCESS;
-    })
-    .addCase(fetchAllAppointments.pending, (state, _) => {
-      state.status = APICallStatus.LOADING;
-    })
-    .addCase(fetchAllAppointments.rejected, (state, action) => {
-      state.status = APICallStatus.FAILED;
-      state.error = action.payload as string ?? action.error.message;
-    })
-    // create appointments
-    .addCase(createAppointment.fulfilled, (state, _) => {
-      state.status =  APICallStatus.IDLE; // to refresh all appointments again
-    })
-    .addCase(createAppointment.pending, (state, _) => {
-      state.status = APICallStatus.LOADING;
-    })
-    .addCase(createAppointment.rejected, (state, action) => {
-      state.status = APICallStatus.FAILED;
-      state.error = action.payload as string ?? action.error.message;
-    })
-    // delete appointment
-    .addCase(deleteAppointment.fulfilled, (state, _) => {
-      state.status =  APICallStatus.IDLE; // to refresh all appointments again
-    })
-    .addCase(deleteAppointment.pending, (state, _) => {
-      state.status = APICallStatus.LOADING;
-    })
-    .addCase(deleteAppointment.rejected, (state, action) => {
-      state.status = APICallStatus.FAILED;
-      state.error = action.payload as string ?? action.error.message;
-    })
-
-    // update appointment
-    .addCase(updateAppointment.fulfilled, (state, _) => {
-      state.status =  APICallStatus.IDLE; // to refresh all appointments again
-    })
-    .addCase(updateAppointment.pending, (state, _) => {
-      state.status = APICallStatus.LOADING;
-    })
-    .addCase(updateAppointment.rejected, (state, action) => {
-      state.status = APICallStatus.FAILED;
-      state.error = action.payload as string ?? action.error.message;
-    })
-    
+  extraReducers: (builder) => {
+    addBuilderCase(builder, fetchUserAppointments, true);
+    addBuilderCase(builder, fetchAllAppointments, true);
+    addBuilderCase(builder, createAppointment);
+    addBuilderCase(builder, deleteAppointment);
+    addBuilderCase(builder, updateAppointment);
   }
 });
 

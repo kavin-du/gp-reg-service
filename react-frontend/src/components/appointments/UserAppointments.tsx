@@ -48,7 +48,7 @@ export default function UserAppointments() {
   };
 
   useEffect(() => {
-    if (appointmentStatus === APICallStatus.IDLE) {
+    if (appointmentStatus === APICallStatus.IDLE || appointmentStatus === APICallStatus.FORCE_REFETCH) {
       dispatch(fetchUserAppointments());
     }
   }, [dispatch, appointmentStatus]);
