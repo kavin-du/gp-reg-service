@@ -1,6 +1,6 @@
-import { Button, H2, Page, TopNav } from 'govuk-react'
+import { Page, TopNav } from 'govuk-react'
 import{ PropsWithChildren } from 'react'
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Role, ROUTES } from '../utils/constants';
 import { getUser, logOut } from '../utils/helpers';
 
@@ -8,15 +8,15 @@ const NavBar = () => {
   const { name, roles } = getUser();
   return (
     <TopNav serviceTitle={<TopNav.NavLink> {`Welcome ${name} (${roles[0]})`} </TopNav.NavLink>}>
-      <Link to={ROUTES.APPOINTMENTS} style={linkStyle}>
+      <NavLink to={ROUTES.APPOINTMENTS} style={activeStyle} >
         Appointments
-      </Link>
-      {!roles.includes(Role.RECEPTIONIST) && <Link to={ROUTES.MEDICAL} style={linkStyle}>
+      </NavLink>
+      {!roles.includes(Role.RECEPTIONIST) && <NavLink to={ROUTES.MEDICAL} style={activeStyle} >
         Medical Records
-      </Link>}
-      <Link to={ROUTES.LOGIN} style={linkStyle} onClick={logOut} replace>
+      </NavLink>}
+      <NavLink to={ROUTES.LOGIN} onClick={logOut} style={linkStyle} replace>
         <span style={{ color: 'green', fontWeight: 'bold' }}>Logout</span>
-      </Link>
+      </NavLink>
     </TopNav>
   );
 }
@@ -28,3 +28,10 @@ export default function PageWrapper(props: PropsWithChildren) {
 }
 
 const linkStyle = { color: 'inherit', textDecoration: 'inherit' };
+
+const activeStyle = (props: any) => (
+  {
+    color: props.isActive ? 'yellow' : 'inherit',
+    textDecoration: 'inherit'
+  }
+)
